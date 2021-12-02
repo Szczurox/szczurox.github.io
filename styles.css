@@ -1,0 +1,16 @@
+body {
+  background-color: gray;
+}
+
+.text {
+  margin-top: auto;
+  color: white;
+  text-align: center;
+  font-size: xx-large;
+}
+
+.image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
