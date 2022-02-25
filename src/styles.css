@@ -74,7 +74,7 @@ input:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: #09ff00;
 }
-
+ 
 ::-webkit-scrollbar-thumb {
   background: #09ff00;
 }
@@ -97,7 +97,7 @@ input:focus {
 }
 
 p {
-  margin-left: 21px;
+  margin-left: 22px;
   margin-top: 0px;
   padding: 0px;
   white-space: pre-wrap;
