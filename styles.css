@@ -1,16 +1,110 @@
 body {
-  background-color: gray;
+  background: black;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #09ff00;
 }
 
-.text {
-  margin-top: auto;
-  color: white;
+a {
+  color: lightcyan;
+}
+
+.container {
+  margin-top: 20px;
+  height: 100px;
+  position: relative;
+  border: 3px solid light;
+  margin-left: 20px;
+}
+
+.vertical_center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  color: red;
   text-align: center;
-  font-size: xx-large;
 }
 
-.image {
+code {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  white-space: pre-wrap;
+  background-color: black;
+  color: #09ff00;
+}
+
+span {
+  margin-left: 20px;
+}
+
+input {
+  background-color: black;
+  color: #09ff00;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  padding: none;
+  width: 90%;
+}
+
+input:focus {
+  outline: none;
+}
+
+::-moz-selection {
+  color: black;
+  background: #09ff00;
+}
+
+::selection {
+  color: black;
+  background: #09ff00;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #09ff00;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #09ff00;
+}
+
+#cmd {
+  padding-bottom: 40px;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.oldcommand > .unselectable {
+  margin-right: 2px;
+}
+
+p {
+  margin-left: 21px;
+  margin-top: 0px;
+  padding: 0px;
+  white-space: pre-wrap;
+}
+
+.oldcommand {
+  margin-left: 0px;
+  padding: 0px;
+  white-space: pre-wrap;
 }

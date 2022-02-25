@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome</title>
     <link rel="stylesheet" href="styles.css" />
-    <title>Hello</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts/constants.js"></script>
+    <script src="scripts/calc.js"></script>
+    <script src="scripts/commands.js"></script>
   </head>
   <body>
-    <div class="start">
-      <br />
-      <img
-        src="depositphotos_2387761-stock-photo-happy-construction-worker.jpg"
-        alt="image didn't load, rip'"
-        class="image"
-      />
-      <br />
-      <p class="text">I Will Do That Later!</p>
+    <div class="container">
+      <div id="cmd">
+        <form id="command">
+          <span class="unselectable">></span>
+          <input type="text" name="command" autofocus autocomplete="off" />
+          <input type="submit" hidden />
+        </form>
+      </div>
     </div>
+    <script src="scripts/main.js"></script>
   </body>
 </html>
