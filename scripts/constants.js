@@ -86,7 +86,7 @@ spaces between the variable name and the equal sign and equal sign and value are
 const info = `     ----------------------------------------------------------
     |             site created by <a href='https://github.com/Szczurox' target=_blank>Szczurox</a>                 |
     |            Hello World! I am Szczurox              |
-    |                programmer for Poland                |
+    |              programmer from Poland               |
     |      who loves working on random stuff        |
      ----------------------------------------------------------
     I am currently working on:
