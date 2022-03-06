@@ -2,8 +2,6 @@ import "./calc.ts";
 import { commands } from "./commands";
 import "./constants.ts";
 
-console.log("test");
-
 var lastCommand: string[] = [];
 var lastCommandPointer = 0;
 
