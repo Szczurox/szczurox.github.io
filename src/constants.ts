@@ -1,4 +1,4 @@
-const amogus = `
+const amogus: string = `
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣤⣤⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⠟⠉⠉⠉⠉⠉⠉⠉⠙⠻⢶⣄⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣷⡀⠀⠀⠀
@@ -21,7 +21,7 @@ const amogus = `
 
 sus...`;
 
-const commandList = [
+const commandList: string[] = [
   "help - displays info about commands",
   "echo - displays message",
   "calc - performs basic math operations",
@@ -30,7 +30,7 @@ const commandList = [
   "set - creates a variable",
 ];
 
-const commandsHelp = {
+const commandsHelp: { [key: string]: string } = {
   "calc": `performs basic mathematical operations: +, -, *, /, %, ^
 doesn't support the order of mathematical operations and parentheses
 can chain multiple operations
@@ -83,7 +83,7 @@ usage: set (variable name) = (value)
 spaces between the variable name and the equal sign and equal sign and value are important!`,
 };
 
-const info = `     ----------------------------------------------------------
+const info: string = `     ----------------------------------------------------------
     |             site created by <a href='https://github.com/Szczurox' target=_blank>Szczurox</a>                 |
     |            Hello World! I am Szczurox              |
     |              programmer from Poland               |
