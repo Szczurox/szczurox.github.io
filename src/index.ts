@@ -2,6 +2,8 @@ import "./calc.ts";
 import { commands } from "./commands";
 import "./constants.ts";
 
+console.log("test");
+
 var lastCommand: string[] = [];
 var lastCommandPointer = 0;
 
@@ -35,7 +37,6 @@ document.onkeydown = function (event) {
   var inputbox: HTMLInputElement | null = document.querySelector("input");
   if (inputbox) {
     inputbox.focus();
-    console.log("ass");
     if (event.keyCode == 38) {
       if (lastCommandPointer > 0) {
         lastCommandPointer -= 1;
