@@ -1,7 +1,6 @@
-import { calc } from "./calc";
+import { calc } from "./calc/calc";
+import { commandList, commandsHelp, info, amogus } from "./constants";
 
-var lastCommand = [];
-var lastCommandPointer = 0;
 var variables: { [key: string]: string } = { "test": "123" };
 const cmd: HTMLElement = document.getElementById("cmd")!;
 
@@ -21,7 +20,7 @@ function help(command: string[], commandResponse: HTMLElement) {
 
 function echo(command: string, commandResponse: HTMLElement) {
   if (command.indexOf(" ") != -1)
-    commandResponse.innerText = command.substr(command.indexOf(" "));
+    commandResponse.innerText = command.substring(command.indexOf(" "));
   else commandResponse.innerText = "you can't echo nothing";
   cmd.before(commandResponse);
 }
@@ -36,12 +35,14 @@ function cls() {
 }
 
 function set(command: string[], commandResponse: HTMLElement) {
-  var variable: string = command[3];
+  var variable: string = command[2];
   if (
     ["+", "-", "*", "/", "%", "^"].some((v) => command.join("").includes(v))
   ) {
-    console.log(command.slice(3, command.length).join(""));
-    variable = calc(command.slice(3, command.length).join("")).toString();
+    console.log(
+      command[1] + " set to " + command.slice(2, command.length).join("")
+    );
+    variable = calc(command.slice(2, command.length).join("")).toString();
   }
   variables[command[1]] = variable;
   commandResponse.innerText = `${command[1]} is set to ${variable}`;
@@ -59,7 +60,7 @@ export function commands(originalCommand: string) {
   }
   commandResponse.className = "commandresp";
   const command: string[] = fixedCommand.split(" ");
-  console.log(command, fixedCommand);
+  console.log("command > command and fixed command: ", command, fixedCommand);
   switch (command[0].toLowerCase()) {
     case "help":
       help(command, commandResponse);
@@ -71,32 +72,28 @@ export function commands(originalCommand: string) {
       echo(fixedCommand, commandResponse);
       break;
     case "calc":
-      calc(fixedCommand.substr(5), commandResponse);
+      calc(fixedCommand.substring(5), commandResponse);
       break;
     case "info":
       commandResponse.innerHTML = info;
-      cmd.before(commandResponse);
       break;
     case "cls":
       cls();
       break;
     case "amogus":
       commandResponse.innerText = amogus;
-      cmd.before(commandResponse);
       break;
     case "dupa123":
-      commandResponse.innerText = "dupa\ndupa\ndupa\npieprzyć";
-      cmd.before(commandResponse);
+      commandResponse.innerText = "dupa\ndupa\ndupa";
       break;
     case "example":
       commandResponse.innerHTML =
         "<a href='https://example.com/' target=_blank>example</a>";
-      cmd.before(commandResponse);
       break;
     default:
       commandResponse.innerText =
         `"${command[0]}"` + " is not recognized as a command";
-      cmd.before(commandResponse);
   }
+  if (commandResponse.innerText != "") cmd.before(commandResponse);
   window.scrollTo(0, document.body.scrollHeight);
 }

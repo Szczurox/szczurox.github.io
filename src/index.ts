@@ -1,4 +1,4 @@
-import "./calc.ts";
+import "./calc/calc.ts";
 import { commands } from "./commands";
 import "./constants.ts";
 
@@ -35,17 +35,30 @@ document.onkeydown = function (event) {
   var inputbox: HTMLInputElement | null = document.querySelector("input");
   if (inputbox) {
     inputbox.focus();
-    if (event.keyCode == 38) {
+    if (event.key == "ArrowUp") {
       if (lastCommandPointer > 0) {
         lastCommandPointer -= 1;
         inputbox.value = lastCommand[lastCommandPointer];
       }
     }
-    if (event.keyCode == 40) {
+    if (event.key == "ArrowDown") {
       if (lastCommandPointer < lastCommand.length - 1) {
         lastCommandPointer += 1;
         inputbox.value = lastCommand[lastCommandPointer];
       }
     }
   }
+};
+
+document.oncontextmenu = function (event) {
+  if (event.shiftKey || event.ctrlKey) {
+    return;
+  }
+
+  event.preventDefault();
+  var inputbox: HTMLInputElement = document.querySelector("input")!;
+  console.log(navigator.clipboard.readText());
+  navigator.clipboard.readText().then((text) => {
+    inputbox.value = inputbox.value + text;
+  });
 };

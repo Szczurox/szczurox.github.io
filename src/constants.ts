@@ -1,4 +1,4 @@
-const amogus: string = `
+export const amogus: string = `
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⣤⣤⣀⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⠟⠉⠉⠉⠉⠉⠉⠉⠙⠻⢶⣄⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣷⡀⠀⠀⠀
@@ -21,22 +21,21 @@ const amogus: string = `
 
 sus...`;
 
-const commandList: string[] = [
+export const commandList: string[] = [
   "help - displays info about commands",
   "echo - displays message",
   "calc - performs basic math operations",
   "info - info about this page",
-  "cls - clears command prompt",
+  "cls - clears terminal",
   "set - creates a variable",
 ];
 
-const commandsHelp: { [key: string]: string } = {
-  "calc": `performs basic mathematical operations: +, -, *, /, %, ^
-doesn't support the order of mathematical operations and parentheses
-can chain multiple operations
-supports rational numbers
+export const commandsHelp: { [key: string]: string } = {
+  "calc": `performs basic mathematical operations: +, -, *, /
+supports order of math operations, parentheses and rational numbers
 
-usage: calc (number) (operation) (number) (operation)...`,
+whitespaces between arguments doesn't matter
+usage: calc (numbers, oprations, paretheses)`,
 
   "echo": `displays message
 
@@ -59,7 +58,7 @@ usage: dupa123`,
 
 usage: example`,
 
-  "cls": `clears command prompt
+  "cls": `clears terminal
 
 usage: cls`,
 
@@ -79,12 +78,12 @@ to get a variable you have to put its name between two percent signs (%)
 variables can be used anywhere in commands
 you can insert math operation as a value, it will calculate it
 
-usage: set (variable name) = (value)
+usage: set (variable name) (value)
 spaces between the variable name and the equal sign and equal sign and value are important!`,
 };
 
-const info: string = `     ----------------------------------------------------------
-    |             site created by <a href='https://github.com/Szczurox' target=_blank>Szczurox</a>                 |
+export const info: string = `     ----------------------------------------------------------
+    |             Site created by <a href='https://github.com/Szczurox' target=_blank>Szczurox</a>                |
     |            Hello World! I am Szczurox              |
     |              programmer from Poland               |
     |      who loves working on random stuff        |
@@ -95,9 +94,9 @@ const info: string = `     -----------------------------------------------------
     
     I worked previously on:
     > Discord bots
-    > Next.js/React websites with back end in Node.js
+    > Next.js/React websites
     > Video games
-    > Smaller projects
+    > Some smaller projects
 
     I program mainly in:
     > C++ ❤
@@ -105,6 +104,6 @@ const info: string = `     -----------------------------------------------------
     > Python
     > JavaScript
 
-    I love strongly typed programming languages ( says when programming website in JS :) )
+    I love strongly typed programming languages
     Wanna talk? contact me on Discord! SzczuroxPL#4889
 `;
