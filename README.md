@@ -1,6 +1,5 @@
 # szczurox.github.io
    
-My website   
 The website's UI is styled as a command-line interface and works similarly   
 use "help" to get information about commands
    
