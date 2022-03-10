@@ -51,6 +51,7 @@ export class Parser {
       (this.current_token.type == TokenType.PLUS ||
         this.current_token.type == TokenType.MINUS)
     ) {
+      console.log(this.current_token);
       if (this.current_token.type == TokenType.PLUS) {
         this.next_node();
         result = new AddNode(result, this.term());
@@ -75,17 +76,14 @@ export class Parser {
         // Multiply node
         this.next_node();
         result = new MultiplyNode(result, this.term2());
-        this.next_node();
       } else if (this.current_token.type == TokenType.DIVIDE) {
         // Divide node
         this.next_node();
         result = new DivideNode(result, this.term2());
-        this.next_node();
       } else if (this.current_token.type == TokenType.MODULO) {
         // Divide node
         this.next_node();
         result = new ModuloNode(result, this.term2());
-        this.next_node();
       }
     }
     return result;
@@ -109,14 +107,14 @@ export class Parser {
   }
 
   factor(): any {
-    if (!this.current_token)
+    if (this.current_token == undefined)
       return error("ERROR: Invalid syntax", this.commandResponse);
     if (this.current_token.type == TokenType.LPAREN) {
       // Had to do it this way because TS was throwing an error in RPAREN check
       this.current_token = this.next_node()!;
       var result = this.expr();
 
-      if (this.current_token.type != TokenType.RPAREN)
+      if (this.current_token == null)
         return error(
           "ERROR: did not close a parenthesis",
           this.commandResponse

@@ -8,6 +8,9 @@ export class Interpreter {
   }
 
   visit(node: any) {
+    if (this.commandResponse != null) {
+      if (this.commandResponse.innerText != "") return;
+    }
     switch (node.name) {
       case "number":
         return this.visit_number(node);
