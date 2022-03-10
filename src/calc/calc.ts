@@ -7,9 +7,9 @@ export function calc(command: string, commandResponse?: HTMLElement | null) {
   var tokens: Token[] | number = lexer(command, commandResponse);
   if (typeof tokens === "number") return -1;
   var mathTree = new Parser(tokens).parse();
-  console.log("calc > math tree: " + mathTree);
+  console.log(mathTree);
   var result = new Interpreter(commandResponse).visit(mathTree);
-  console.log("calc > result: " + result);
+  console.log(result);
   if (commandResponse) {
     commandResponse.innerText = result;
     document.getElementById("cmd")!.before(commandResponse);

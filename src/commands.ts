@@ -60,7 +60,7 @@ export function commands(originalCommand: string) {
   }
   commandResponse.className = "commandresp";
   const command: string[] = fixedCommand.split(" ");
-  console.log("command > command and fixed command: ", command, fixedCommand);
+  console.log(command, fixedCommand);
   switch (command[0].toLowerCase()) {
     case "help":
       help(command, commandResponse);

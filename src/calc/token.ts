@@ -7,6 +7,7 @@ export enum TokenType {
   MODULO,
   LPAREN,
   RPAREN,
+  POW,
 }
 
 export class Token {

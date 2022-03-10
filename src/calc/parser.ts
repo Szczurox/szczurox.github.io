@@ -6,6 +6,7 @@ import {
   ModuloNode,
   NumberNode,
   PlusNode,
+  PowNode,
   MinusNode,
 } from "./nodes";
 import { Token, TokenType } from "./token";
@@ -63,8 +64,7 @@ export class Parser {
 
   term() {
     // Get first half of the node
-    let result: any = this.factor();
-    this.next_node();
+    let result: any = this.term2();
     while (
       this.current_token != null &&
       (this.current_token.type == TokenType.MULTIPLY ||
@@ -74,17 +74,34 @@ export class Parser {
       if (this.current_token.type == TokenType.MULTIPLY) {
         // Multiply node
         this.next_node();
-        result = new MultiplyNode(result, this.factor());
+        result = new MultiplyNode(result, this.term2());
         this.next_node();
       } else if (this.current_token.type == TokenType.DIVIDE) {
         // Divide node
         this.next_node();
-        result = new DivideNode(result, this.factor());
+        result = new DivideNode(result, this.term2());
         this.next_node();
       } else if (this.current_token.type == TokenType.MODULO) {
         // Divide node
         this.next_node();
-        result = new ModuloNode(result, this.factor());
+        result = new ModuloNode(result, this.term2());
+        this.next_node();
+      }
+    }
+    return result;
+  }
+
+  term2() {
+    let result: any = this.factor();
+    this.next_node();
+    while (
+      this.current_token != null &&
+      this.current_token.type == TokenType.POW
+    ) {
+      if (this.current_token.type == TokenType.POW) {
+        // Exponentation node
+        this.next_node();
+        result = new PowNode(result, this.factor());
         this.next_node();
       }
     }

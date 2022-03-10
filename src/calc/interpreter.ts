@@ -25,6 +25,8 @@ export class Interpreter {
         return this.visit_minus(node);
       case "modulo":
         return this.visit_modulo(node);
+      case "pow":
+        return this.visit_pow(node);
       default:
         return NaN;
     }
@@ -56,6 +58,10 @@ export class Interpreter {
 
   visit_modulo(node: any): any {
     return this.visit(node.node_a) % this.visit(node.node_b);
+  }
+
+  visit_pow(node: any): any {
+    return Math.pow(this.visit(node.node_a), this.visit(node.node_b));
   }
 
   visit_plus(node: any): any {

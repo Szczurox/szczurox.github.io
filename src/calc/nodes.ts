@@ -62,6 +62,18 @@ export class ModuloNode {
   }
 }
 
+// Exponentation
+export class PowNode {
+  node_a: any;
+  node_b: any;
+  name: string = "pow";
+
+  constructor(node_a: any, node_b: any) {
+    this.node_a = node_a;
+    this.node_b = node_b;
+  }
+}
+
 export class MinusNode {
   node: any;
   name: string = "minus";

@@ -38,6 +38,9 @@ export function lexer(command: string, commandResponse?: HTMLElement | null) {
         case "%":
           tokens.push(new Token(TokenType.MODULO));
           break;
+        case "^":
+          tokens.push(new Token(TokenType.POW));
+          break;
         case "(":
           tokens.push(new Token(TokenType.LPAREN));
           break;
