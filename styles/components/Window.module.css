@@ -8,6 +8,11 @@
   padding-right: 10px;
   display: table;
   opacity: 1;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .window_content_background {
@@ -31,6 +36,16 @@
   margin: none;
   margin-top: 2px;
   margin-right: 5px;
+}
+
+.x {
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%);
+  display: table-cell;
+  padding: none;
+  margin: none;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 .title {
