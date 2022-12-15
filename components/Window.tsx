@@ -4,11 +4,16 @@ import { Resizable, ResizeCallbackData } from "react-resizable";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 interface WindowProps {
-  title?: String;
-  icon?: String;
+  title?: string;
+  icon?: string;
+  children?: React.ReactNode;
 }
 
-export const Window: React.FC<WindowProps> = ({ title = "Window" }) => {
+export const Window: React.FC<WindowProps> = ({
+  title = "Window",
+  icon = "txt-file-icon.svg",
+  children,
+}) => {
   const [handleWidth, setHandleWidth] = useState<number>(500);
   const [handleHeight, setHandleHeight] = useState<number>(35);
 
@@ -35,7 +40,12 @@ export const Window: React.FC<WindowProps> = ({ title = "Window" }) => {
               height: handleHeight,
             }}
           >
-            <span>{title}</span>
+            <img
+              src={icon}
+              style={{ maxHeight: handleHeight - 10 }}
+              className={styles.icon}
+            />
+            <p className={styles.title}>{title}</p>
           </div>
           <div
             className={styles.window_content_background}
@@ -44,7 +54,7 @@ export const Window: React.FC<WindowProps> = ({ title = "Window" }) => {
               minHeight: handleHeight,
             }}
           >
-            <div className={styles.window_content}></div>
+            <div className={styles.window_content}>{children}</div>
           </div>
         </div>
       </Draggable>

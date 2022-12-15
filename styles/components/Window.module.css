@@ -1,16 +1,18 @@
 .window_handle {
-  background-color: #31b52a;
-  border: 4px solid #2ca326;
+  color: rgb(0, 237, 0);
+  background-color: black;
+  border: 2px solid #31b82a;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   padding-left: 10px;
   padding-right: 10px;
+  display: table;
+  opacity: 1;
 }
 
 .window_content_background {
-  background-color: #474747;
-  opacity: 0.5;
-  border: 4px transparent grey;
+  background-color: #181818;
+  opacity: 0.9;
   padding: 10px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -19,4 +21,22 @@
 .window_content {
   color: rgb(74, 255, 74);
   opacity: 1;
+}
+
+.icon {
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%);
+  display: table-cell;
+  padding: none;
+  margin: none;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+
+.title {
+  padding: none;
+  color: rgb(0, 237, 0);
+  margin: none;
+  display: table-cell;
+  vertical-align: middle;
 }
