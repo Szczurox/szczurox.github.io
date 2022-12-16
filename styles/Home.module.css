@@ -26,38 +26,3 @@
   filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
     brightness(118%) contrast(119%);
 }
-
-.file {
-  width: 60px;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none;
-}
-
-.file > .icon {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: none;
-  margin: none;
-}
-
-.file > .file_name {
-  display: -webkit-box;
-  max-width: 60px;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-size: 15px;
-  align-content: center;
-  word-wrap: break-word;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
-  max-height: 10vh;
-  flex: 1;
-  margin: none;
-  padding: none;
-}

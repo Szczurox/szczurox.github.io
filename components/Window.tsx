@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import styles from "../styles/components/Window.module.css";
-import { Resizable, ResizeCallbackData } from "react-resizable";
-import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
+import Draggable from "react-draggable";
 
 interface WindowProps {
   title?: string;
@@ -20,6 +19,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
   constructor(props: WindowStates) {
     super(props);
     this.state = {
+      // Default values
       show: false,
       handleWidth: 500,
       handleHeight: 35,

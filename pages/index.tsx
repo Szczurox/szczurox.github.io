@@ -1,11 +1,11 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { Window } from "../components/Window";
-import { createRef, RefObject, useState } from "react";
+import { File } from "../components/File";
+import { createRef, RefObject } from "react";
 
 export default function Home() {
-  const [showReadme, setShowReadme] = useState<boolean>(false);
-  const changeChild: RefObject<Window> = createRef();
+  const readmeWindowRef: RefObject<Window> = createRef();
 
   return (
     <div className={styles.container}>
@@ -17,15 +17,13 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.desktop}>
           <div className={styles.desktop_icons}>
-            <div
-              className={styles.file}
-              onClick={(_) => changeChild.current?.toggleShow()}
-            >
-              <img src="txt-file-icon.svg" className={styles.icon} />
-              <div className={styles.file_name}>README</div>
-            </div>
+            <File
+              windowRef={readmeWindowRef}
+              name="README"
+              icon="txt-file-icon.svg"
+            />
           </div>
-          <Window title="README" icon="txt-file-icon.svg" ref={changeChild}>
+          <Window title="README" icon="txt-file-icon.svg" ref={readmeWindowRef}>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               ipsum dolor, ultricies hendrerit dignissim in, pretium in orci.
