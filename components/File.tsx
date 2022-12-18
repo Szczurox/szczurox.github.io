@@ -3,13 +3,13 @@ import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import styles from "../styles/components/File.module.css";
 import { Window } from "./Window";
 
-interface FileProps {
+export interface FileProps {
   name?: string;
   icon?: string;
   windowRef: RefObject<Window>;
 }
 
-interface FileStates {
+export interface FileStates {
   xBef: number;
   yBef: number;
 }

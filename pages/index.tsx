@@ -1,11 +1,41 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { Window } from "../components/Window";
-import { File } from "../components/File";
-import { createRef, RefObject } from "react";
+import { Window, WindowProps } from "../components/Window";
+import { File, FileProps } from "../components/File";
+import { createRef, RefObject, useEffect, useState } from "react";
+import ReadMe from "../components/files/ReadMe";
+import { Task, TaskProps } from "../components/Task";
+
+interface Element {
+  window: WindowProps;
+  file: FileProps;
+  task: TaskProps;
+}
 
 export default function Home() {
   const readmeWindowRef: RefObject<Window> = createRef();
+
+  const README: Element = {
+    window: {
+      title: "README",
+      icon: "txt-file-icon.svg",
+      children: <ReadMe />,
+    },
+    file: {
+      name: "README",
+      icon: "txt-file-icon.svg",
+      windowRef: readmeWindowRef,
+    },
+    task: {
+      name: "README",
+      icon: "txt-file-icon.svg",
+      windowRef: readmeWindowRef,
+    },
+  };
+
+  useEffect(() => {});
+
+  const [elements, setElements] = useState<Element[]>([README]);
 
   return (
     <div className={styles.container}>
@@ -17,28 +47,39 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.desktop}>
           <div className={styles.desktop_icons}>
-            <File
-              windowRef={readmeWindowRef}
-              name="README"
-              icon="txt-file-icon.svg"
-            />
+            {elements
+              ? elements!.map((element) => (
+                  <File
+                    windowRef={element.file.windowRef}
+                    name={element.file.name}
+                    icon={element.window.icon}
+                  />
+                ))
+              : null}
           </div>
-          <Window title="README" icon="txt-file-icon.svg" ref={readmeWindowRef}>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-              ipsum dolor, ultricies hendrerit dignissim in, pretium in orci.
-              Mauris euismod lorem sit amet ipsum dapibus, vel euismod massa
-              pulvinar. Vestibulum id ullamcorper nunc. Donec rhoncus ex mauris,
-              ac consectetur felis hendrerit in. Vestibulum convallis finibus
-              aliquet. Pellentesque rhoncus tortor eget neque commodo vehicula
-              sed a velit. Suspendisse nec tristique libero. Sed malesuada dui
-              vel sapien vestibulum vulputate. Nullam malesuada imperdiet nisi
-              eget semper. Ut malesuada augue eu tristique laoreet. In metus
-              metus, pulvinar vitae imperdiet quis, convallis quis sem.
-            </p>
-          </Window>
+          {elements
+            ? elements!.map((element) => (
+                <Window
+                  title={element.window.title}
+                  icon={element.window.icon}
+                  ref={element.file.windowRef}
+                >
+                  {element.window.children}
+                </Window>
+              ))
+            : null}
         </div>
-        <div className={styles.taskbar}></div>
+        <div className={styles.taskbar}>
+          {elements
+            ? elements!.map((element) => (
+                <Task
+                  windowRef={element.file.windowRef}
+                  name={element.file.name}
+                  icon={element.window.icon}
+                />
+              ))
+            : null}
+        </div>
       </main>
     </div>
   );

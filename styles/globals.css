@@ -16,6 +16,14 @@ a {
   box-sizing: border-box;
 }
 
+::selection {
+  background: rgb(38, 104, 38); /* WebKit/Blink Browsers */
+}
+
+::-moz-selection {
+  background: rgb(38, 104, 38); /* Gecko Browsers */
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

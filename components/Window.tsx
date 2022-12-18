@@ -2,14 +2,14 @@ import React from "react";
 import styles from "../styles/components/Window.module.css";
 import Draggable from "react-draggable";
 
-interface WindowProps {
+export interface WindowProps {
   title?: string;
   icon?: string;
   show?: boolean;
   children?: React.ReactNode;
 }
 
-interface WindowStates {
+export interface WindowStates {
   show?: boolean;
   handleWidth?: number;
   handleHeight?: number;

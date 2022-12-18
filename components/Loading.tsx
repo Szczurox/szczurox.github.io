@@ -1,6 +1,6 @@
 import React from "react";
 
-interface LoadingProps {
+export interface LoadingProps {
   loading: boolean;
 }
 

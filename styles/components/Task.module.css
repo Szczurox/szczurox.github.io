@@ -1,0 +1,48 @@
+.task {
+  width: 4.5vh;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none;
+}
+
+.task_selected {
+  width: 4.5vh;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none;
+  background-color: rgb(121, 255, 121);
+  padding-bottom: 1vh;
+}
+
+.name {
+  position: relative;
+  top: -25px;
+  right: 50%;
+  left: 0%;
+  padding: none;
+  margin: none;
+  color: rgb(74, 255, 74);
+}
+
+.icon {
+  width: 3.3vh;
+  -webkit-user-drag: none;
+  margin: none;
+  padding: none;
+  margin-top: 0.15vh;
+  margin-left: 0.8vh;
+  margin-right: 0.8vh;
+}
+
+.icon_hover {
+  width: 3.3vh;
+  -webkit-user-drag: none;
+  margin: none;
+  padding: none;
+  position: relative;
+  top: -20px;
+  margin-left: 0.8vh;
+  margin-right: 0.8vh;
+}
