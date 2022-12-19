@@ -14,12 +14,16 @@ interface Element {
 
 export default function Home() {
   const readmeWindowRef: RefObject<Window> = createRef();
+  const readmeTaskRef: RefObject<Task> = createRef();
+  const readme2WindowRef: RefObject<Window> = createRef();
+  const readme2TaskRef: RefObject<Task> = createRef();
 
   const README: Element = {
     window: {
       title: "README",
       icon: "txt-file-icon.svg",
       children: <ReadMe />,
+      taskRef: readmeTaskRef,
     },
     file: {
       name: "README",
@@ -33,9 +37,62 @@ export default function Home() {
     },
   };
 
-  useEffect(() => {});
+  const README2: Element = {
+    window: {
+      title: "README2",
+      icon: "txt-file-icon.svg",
+      children: <ReadMe />,
+      taskRef: readme2TaskRef,
+    },
+    file: {
+      name: "README2",
+      icon: "txt-file-icon.svg",
+      windowRef: readme2WindowRef,
+    },
+    task: {
+      name: "README2",
+      icon: "txt-file-icon.svg",
+      windowRef: readme2WindowRef,
+    },
+  };
 
-  const [elements, setElements] = useState<Element[]>([README]);
+  const [elements, setElements] = useState<Element[]>([README, README2]);
+
+  const addElement = (
+    fileName?: string,
+    iconPath?: string,
+    windowName?: string,
+    children?: React.ReactNode
+  ) => {
+    if (!fileName) fileName = "FILE";
+    if (!iconPath) iconPath = "txt-file-icon.svg";
+    if (!windowName) windowName = fileName;
+
+    const windowRef: RefObject<Window> = createRef();
+    const taskRef: RefObject<Task> = createRef();
+
+    setElements([
+      ...elements,
+      {
+        window: {
+          title: windowName,
+          icon: iconPath,
+          children: children ? children : <></>,
+          taskRef: taskRef,
+        },
+        file: {
+          name: fileName,
+          icon: iconPath,
+          windowRef: windowRef,
+        },
+        task: {
+          name: fileName,
+          icon: iconPath,
+          windowRef: windowRef,
+        },
+      },
+    ]);
+  };
 
   return (
     <div className={styles.container}>
@@ -57,17 +114,20 @@ export default function Home() {
                 ))
               : null}
           </div>
-          {elements
-            ? elements!.map((element) => (
-                <Window
-                  title={element.window.title}
-                  icon={element.window.icon}
-                  ref={element.file.windowRef}
-                >
-                  {element.window.children}
-                </Window>
-              ))
-            : null}
+          <div className={styles.desktop_windows}>
+            {elements
+              ? elements!.map((element) => (
+                  <Window
+                    title={element.window.title}
+                    icon={element.window.icon}
+                    taskRef={element.window.taskRef}
+                    ref={element.file.windowRef}
+                  >
+                    {element.window.children}
+                  </Window>
+                ))
+              : null}
+          </div>
         </div>
         <div className={styles.taskbar}>
           {elements
@@ -76,6 +136,7 @@ export default function Home() {
                   windowRef={element.file.windowRef}
                   name={element.file.name}
                   icon={element.window.icon}
+                  ref={element.window.taskRef}
                 />
               ))
             : null}

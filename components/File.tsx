@@ -1,11 +1,12 @@
 import React, { RefObject } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import styles from "../styles/components/File.module.css";
+import { Task } from "./Task";
 import { Window } from "./Window";
 
 export interface FileProps {
-  name?: string;
-  icon?: string;
+  name: string;
+  icon: string;
   windowRef: RefObject<Window>;
 }
 
@@ -32,7 +33,9 @@ export class File extends React.Component<FileProps, FileStates> {
 
   handleDragStop = (e: DraggableEvent, data: DraggableData) => {
     if (data.x == this.state.xBef && data.y == this.state.yBef)
-      this.props.windowRef.current?.toggleShow();
+      if (this.props.windowRef.current?.props.taskRef?.current?.state.show)
+        this.props.windowRef.current?.toggleMinimiseWindow();
+      else this.props.windowRef.current?.toggleShow();
   };
 
   render() {

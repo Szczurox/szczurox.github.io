@@ -28,6 +28,13 @@
   opacity: 1;
 }
 
+.window_content_background_fullscreen {
+  background-color: #181818;
+  opacity: 0.9;
+  padding: 10px;
+  border-radius: "0px";
+}
+
 .icon {
   -webkit-user-drag: none;
   filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
@@ -46,7 +53,19 @@
   display: table-cell;
   padding: none;
   margin: none;
-  margin-right: 5px;
+  margin-left: 7px;
+  vertical-align: middle;
+}
+
+.minimise {
+  -webkit-user-drag: none;
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%);
+  display: table-cell;
+  padding: none;
+  margin: none;
+  margin-top: 5px;
+  margin-left: 7px;
   vertical-align: middle;
 }
 

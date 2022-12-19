@@ -23,7 +23,14 @@
 }
 
 .desktop_icons {
+  display: table;
   padding: 20px;
   filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
     brightness(118%) contrast(119%);
+}
+
+.desktop_windows {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
 }

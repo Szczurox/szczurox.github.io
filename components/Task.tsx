@@ -3,14 +3,15 @@ import styles from "../styles/components/Task.module.css";
 import { Window } from "./Window";
 
 export interface TaskProps {
-  name?: string;
-  icon?: string;
+  name: string;
+  icon: string;
   windowRef: RefObject<Window>;
 }
 
 export interface TaskStates {
   isHovering: boolean;
   isSelected: boolean;
+  show: boolean;
 }
 
 export class Task extends React.Component<TaskProps, TaskStates> {
@@ -19,23 +20,25 @@ export class Task extends React.Component<TaskProps, TaskStates> {
     this.state = {
       isHovering: false,
       isSelected: false,
+      show: false,
     };
   }
 
   toggleSelect = () => {
-    this.props.windowRef.current?.toggleShow();
+    this.props.windowRef.current?.toggleMinimiseWindow();
     this.setState({
       isSelected: !this.state.isSelected,
     });
   };
 
-  render() {
-    // Default values
-    let { name, icon } = this.props;
-    if (!name) name = "FILE";
-    if (!icon) icon = "txt-file-icon.svg";
+  toggleShow = () => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
 
-    return (
+  render() {
+    return this.state.show ? (
       <div
         className={this.state.isSelected ? styles.task_selected : styles.task}
       >
@@ -61,6 +64,6 @@ export class Task extends React.Component<TaskProps, TaskStates> {
           />
         </div>
       </div>
-    );
+    ) : null;
   }
 }

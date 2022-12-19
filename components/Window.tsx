@@ -1,85 +1,175 @@
-import React from "react";
+import React, { createRef, RefObject } from "react";
 import styles from "../styles/components/Window.module.css";
 import Draggable from "react-draggable";
+import { Task } from "./Task";
 
 export interface WindowProps {
-  title?: string;
-  icon?: string;
-  show?: boolean;
+  title: string;
+  icon: string;
   children?: React.ReactNode;
+  taskRef?: RefObject<Task>;
 }
 
 export interface WindowStates {
+  open?: boolean;
   show?: boolean;
-  handleWidth?: number;
-  handleHeight?: number;
+  fullscreen?: boolean;
+  windowedWidth?: number | string;
+  windowedHeight?: number | string;
+  zIndex?: number;
 }
 
 export class Window extends React.Component<WindowProps, WindowStates> {
-  constructor(props: WindowStates) {
+  constructor(props: WindowProps) {
     super(props);
     this.state = {
       // Default values
-      show: false,
-      handleWidth: 500,
-      handleHeight: 35,
+      open: false,
+      show: true,
+      fullscreen: false,
+      windowedWidth: 500,
+      windowedHeight: 35,
+      zIndex: 100,
     };
   }
 
-  toggleShow = () => {
+  toggleMinimiseWindow = () => {
     this.setState({
       show: !this.state.show,
     });
+    this.props.taskRef?.current?.setState({
+      show: true,
+      isSelected: !this.props.taskRef.current.state.isSelected,
+    });
+  };
+
+  toggleShow = () => {
+    this.setState({
+      open: !this.state.open,
+      fullscreen: false,
+    });
+    this.props.taskRef?.current?.toggleShow();
+    this.props.taskRef?.current?.setState({
+      isSelected: true,
+    });
+  };
+
+  toggleFullscreen = () => {
+    this.setState({
+      fullscreen: !this.state.fullscreen,
+    });
+  };
+
+  mainWindow = () => {
+    return (
+      <>
+        <div
+          className={styles.window_handle}
+          style={{
+            position: this.state.fullscreen ? "fixed" : "static",
+            minWidth: this.state.fullscreen ? "100%" : this.state.windowedWidth,
+            height: this.state.windowedHeight,
+          }}
+        >
+          <img
+            src={this.props.icon}
+            style={{ maxHeight: (this.state.windowedHeight! as number) - 10 }}
+            className={styles.icon}
+          />
+          <p className={styles.title}>{this.props.title}</p>
+          <img
+            src={"subtract.svg"}
+            style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
+            className={styles.minimise}
+            onClick={(_) => this.toggleMinimiseWindow()}
+          />
+          <span className={styles.title}></span>
+          <img
+            src={
+              this.state.fullscreen ? "exit-full-screen.svg" : "full-screen.svg"
+            }
+            style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
+            className={styles.x}
+            onClick={(_) => this.toggleFullscreen()}
+          />
+          <span className={styles.title}></span>
+          <img
+            src={"x-symbol.svg"}
+            style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
+            className={styles.x}
+            onClick={(_) => this.toggleShow()}
+          />
+        </div>
+        <div
+          className={
+            this.state.fullscreen
+              ? styles.window_content_background_fullscreen
+              : styles.window_content_background
+          }
+          style={
+            this.state.fullscreen
+              ? {
+                  top: this.state.windowedHeight + "px",
+                  width: "100%",
+                  position: "fixed",
+                  height: "100%",
+                }
+              : { width: this.state.windowedWidth }
+          }
+        >
+          <div className={styles.window_content}>{this.props.children}</div>
+        </div>
+      </>
+    );
   };
 
   render() {
-    return this.state.show ? (
-      <div className={styles.window}>
-        <Draggable
-          defaultPosition={{
-            x: 0,
-            y: 0,
-          }}
-          handle={"." + styles.window_handle}
-        >
+    const windowRef = createRef<HTMLDivElement>();
+
+    return this.state.open ? (
+      <div
+        className={styles.window}
+        style={this.state.show ? {} : { display: "none" }}
+      >
+        {this.state.fullscreen ? (
           <div
             style={{
+              flex: 1,
               position: "fixed",
-              top: 30 + "%",
-              left: 30 + "%",
+              zIndex: 10000,
+              top: 0,
+              left: 0,
+            }}
+          >
+            {this.mainWindow()}
+          </div>
+        ) : (
+          <Draggable
+            defaultPosition={{
+              x: 0,
+              y: 0,
+            }}
+            handle={"." + styles.window_handle}
+            onStart={(_) => {
+              this.setState({ zIndex: this.state.zIndex! + 100 });
+            }}
+            onStop={(_) => {
+              this.setState({ zIndex: this.state.zIndex! - 100 });
             }}
           >
             <div
-              className={styles.window_handle}
+              ref={windowRef}
               style={{
-                width: this.state.handleWidth,
-                height: this.state.handleHeight,
+                position: "fixed",
+                top: 30 + "%",
+                left: 30 + "%",
+                zIndex: this.state.zIndex,
               }}
             >
-              <img
-                src={this.props.icon}
-                style={{ maxHeight: this.state.handleHeight! - 10 }}
-                className={styles.icon}
-              />
-              <p className={styles.title}>{this.props.title}</p>
-              <img
-                src={"x-symbol.svg"}
-                style={{ maxHeight: this.state.handleHeight! - 15 }}
-                className={styles.x}
-                onClick={(e) => this.toggleShow()}
-              />
+              {this.mainWindow()}
             </div>
-            <div
-              className={styles.window_content_background}
-              style={{
-                width: this.state.handleWidth,
-                minHeight: this.state.handleHeight,
-              }}
-            >
-              <div className={styles.window_content}>{this.props.children}</div>
-            </div>
-          </div>
-        </Draggable>
+          </Draggable>
+        )}
       </div>
     ) : null;
   }
