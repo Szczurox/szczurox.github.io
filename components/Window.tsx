@@ -1,6 +1,6 @@
 import React, { createRef, RefObject } from "react";
 import styles from "../styles/components/Window.module.css";
-import Draggable from "react-draggable";
+import Draggable, { DraggableEvent } from "react-draggable";
 import { Task } from "./Task";
 
 export interface WindowProps {
@@ -8,6 +8,8 @@ export interface WindowProps {
   icon: string;
   children?: React.ReactNode;
   taskRef?: RefObject<Task>;
+  zIndex?: number;
+  onWindowGrab?: (index: number) => void;
 }
 
 export interface WindowStates {
@@ -29,7 +31,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
       fullscreen: false,
       windowedWidth: 500,
       windowedHeight: 35,
-      zIndex: 100,
+      zIndex: this.props.zIndex,
     };
   }
 
@@ -57,6 +59,18 @@ export class Window extends React.Component<WindowProps, WindowStates> {
   toggleFullscreen = () => {
     this.setState({
       fullscreen: !this.state.fullscreen,
+    });
+  };
+
+  decrementZIndex = () => {
+    this.setState({
+      zIndex: this.state.zIndex! - 1,
+    });
+  };
+
+  setZIndex = (zIndex: number) => {
+    this.setState({
+      zIndex: zIndex,
     });
   };
 
@@ -151,10 +165,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             }}
             handle={"." + styles.window_handle}
             onStart={(_) => {
-              this.setState({ zIndex: this.state.zIndex! + 100 });
-            }}
-            onStop={(_) => {
-              this.setState({ zIndex: this.state.zIndex! - 100 });
+              if (this.props.onWindowGrab)
+                this.props.onWindowGrab(this.props.zIndex! - 100);
             }}
           >
             <div
