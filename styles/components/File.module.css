@@ -1,6 +1,6 @@
 .file {
-  padding-right: 20px;
-  width: 60px;
+  padding-right: 30px;
+  width: 80px;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
@@ -34,4 +34,6 @@
   flex: 1;
   margin: none;
   padding: none;
+  text-align: center;
+  vertical-align: bottom;
 }

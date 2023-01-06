@@ -26,9 +26,10 @@
   max-width: 4.5vh;
   font-size: 1.5vh;
   position: absolute;
-  transform: translate(-20%, -100%);
+  transform: translate(0%, -100%);
   padding: none;
   margin: none;
+  text-align: center;
   color: rgb(74, 255, 74);
 }
 

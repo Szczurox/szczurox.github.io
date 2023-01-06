@@ -1,6 +1,7 @@
 import React from "react";
+import { createDesktopElement } from "../utils/Element";
 
-export const ReadMe: React.FC = ({}) => {
+const ReadMeWindowContent: React.FC = () => {
   return (
     <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ipsum
@@ -16,4 +17,10 @@ export const ReadMe: React.FC = ({}) => {
   );
 };
 
-export default ReadMe;
+export const ReadMeElement = createDesktopElement(
+  "README",
+  "txt-file-icon.svg",
+  <ReadMeWindowContent />
+);
+
+export default ReadMeElement;
