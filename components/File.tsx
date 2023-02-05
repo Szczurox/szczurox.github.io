@@ -1,7 +1,6 @@
 import React, { RefObject } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import styles from "../styles/components/File.module.css";
-import { Task } from "./Task";
 import { Window } from "./Window";
 
 export interface FileProps {

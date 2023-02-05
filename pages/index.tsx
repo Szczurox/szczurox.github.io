@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { Window, WindowProps } from "../components/Window";
 import { File, FileProps } from "../components/File";
-import { createRef, RefObject, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Task, TaskProps } from "../components/Task";
 import CmdElement from "../components/elements/Console";
 import ReadMeElement from "../components/elements/ReadMe";

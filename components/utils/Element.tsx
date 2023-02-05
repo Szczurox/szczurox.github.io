@@ -1,4 +1,5 @@
-import { createRef, RefObject } from "react";
+import { ReactElement } from "react";
+import { createRef, ReactNode, RefObject } from "react";
 import { FileProps } from "../File";
 import { Task, TaskProps } from "../Task";
 import { Window, WindowProps } from "../Window";
@@ -12,7 +13,7 @@ export interface DesktopElement {
 export const createDesktopElement = (
   fileName?: string,
   iconPath?: string,
-  children?: React.ReactNode,
+  children?: ReactElement,
   windowName?: string
 ): DesktopElement => {
   if (!fileName) fileName = "FILE";

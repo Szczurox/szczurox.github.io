@@ -1,57 +1,83 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  FormEventHandler,
-  useState,
-} from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 import { createDesktopElement } from "../utils/Element";
 import styles from "../../styles/components/elements/Console.module.css";
+import { UniversalContext } from "../utils/UniversalProvider";
 
-const ConsoleWindowContent: React.FC = () => {
-  const [command, setCommand] = useState<string>("");
+export interface ConsoleWindowProps {
+  command?: string;
+  id: string;
+}
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+export interface ConsoleWindowStates {
+  command: string;
+}
+
+export class ConsoleWindowContent extends React.Component<
+  ConsoleWindowProps,
+  ConsoleWindowStates
+> {
+  static contextType = UniversalContext;
+  context!: React.ContextType<typeof UniversalContext>;
+
+  constructor(props: ConsoleWindowProps) {
+    super(props);
+    this.state = {
+      command: "",
+    };
+  }
+
+  componentDidMount() {
+    const value: any = this.context;
+    if (value) this.setState(value);
+    else this.context.setChildState(this.state);
+  }
+
+  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    setCommand(event.target.value);
+    this.setState({ command: event.target.value });
+    this.context.setChildState(this.state);
+    console.log(this.context);
   };
 
-  const submitForm = (event: FormEvent<HTMLFormElement>) => {
+  submitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(command);
+    console.log(this.state.command);
   };
 
-  return (
-    <div className={styles.console}>
-      <p></p>
-      <div className={styles.cmd}>
-        <form
-          onSubmit={(e) => {
-            submitForm(e);
-          }}
-        >
-          <span className={styles.unselectable}>{">"}</span>
-          <input
-            className={styles.console_input}
-            type="text"
-            name="command"
-            value={command}
-            autoFocus
-            autoComplete="off"
-            onChange={(e) => {
-              handleChange(e);
+  render() {
+    return (
+      <div className={styles.console}>
+        <p></p>
+        <div className={styles.cmd}>
+          <form
+            onSubmit={(e) => {
+              this.submitForm(e);
             }}
-          />
-          <input type="submit" hidden />
-        </form>
+          >
+            <span className={styles.unselectable}>{">"}</span>
+            <input
+              className={styles.console_input}
+              type="text"
+              name="command"
+              value={this.state.command}
+              autoFocus
+              autoComplete="off"
+              onChange={(e) => {
+                this.handleChange(e);
+              }}
+            />
+            <input type="submit" hidden />
+          </form>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export const CmdElement = createDesktopElement(
   "Console",
   "cmd-icon.svg",
-  <ConsoleWindowContent />
+  <ConsoleWindowContent id="1" />
 );
 
 export default CmdElement;

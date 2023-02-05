@@ -1,12 +1,13 @@
-import React, { createRef, RefObject } from "react";
+import React, { createRef, ReactElement, RefObject } from "react";
 import styles from "../styles/components/Window.module.css";
-import Draggable, { DraggableEvent } from "react-draggable";
+import Draggable from "react-draggable";
 import { Task } from "./Task";
+import { UniversalProvider } from "./utils/UniversalProvider";
 
 export interface WindowProps {
   title: string;
   icon: string;
-  children?: React.ReactNode;
+  children?: ReactElement;
   taskRef?: RefObject<Task>;
   zIndex?: number;
   onWindowGrab?: (index: number) => void;
@@ -22,6 +23,8 @@ export interface WindowStates {
 }
 
 export class Window extends React.Component<WindowProps, WindowStates> {
+  private contentRef?: RefObject<ReactElement>;
+
   constructor(props: WindowProps) {
     super(props);
     this.state = {
@@ -33,6 +36,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
       windowedHeight: 35,
       zIndex: this.props.zIndex,
     };
+    this.contentRef = React.createRef();
   }
 
   toggleMinimiseWindow = () => {
@@ -131,7 +135,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
               : { width: this.state.windowedWidth }
           }
         >
-          <div className={styles.window_content}>{this.props.children}</div>
+          <div className={styles.window_content}>{this.props.children!}</div>
         </div>
       </>
     );
@@ -145,43 +149,45 @@ export class Window extends React.Component<WindowProps, WindowStates> {
         className={styles.window}
         style={this.state.show ? {} : { display: "none" }}
       >
-        {this.state.fullscreen ? (
-          <div
-            style={{
-              flex: 1,
-              position: "fixed",
-              zIndex: 10000,
-              top: 0,
-              left: 0,
-            }}
-          >
-            {this.mainWindow()}
-          </div>
-        ) : (
-          <Draggable
-            defaultPosition={{
-              x: 0,
-              y: 0,
-            }}
-            handle={"." + styles.window_handle}
-            onStart={(_) => {
-              if (this.props.onWindowGrab)
-                this.props.onWindowGrab(this.props.zIndex! - 100);
-            }}
-          >
+        <UniversalProvider>
+          {this.state.fullscreen ? (
             <div
-              ref={windowRef}
               style={{
+                flex: 1,
                 position: "fixed",
-                top: 30 + "%",
-                left: 30 + "%",
-                zIndex: this.state.zIndex,
+                zIndex: 10000,
+                top: 0,
+                left: 0,
               }}
             >
               {this.mainWindow()}
             </div>
-          </Draggable>
-        )}
+          ) : (
+            <Draggable
+              defaultPosition={{
+                x: 0,
+                y: 0,
+              }}
+              handle={"." + styles.window_handle}
+              onStart={(_) => {
+                if (this.props.onWindowGrab)
+                  this.props.onWindowGrab(this.props.zIndex! - 100);
+              }}
+            >
+              <div
+                ref={windowRef}
+                style={{
+                  position: "fixed",
+                  top: 30 + "%",
+                  left: 30 + "%",
+                  zIndex: this.state.zIndex,
+                }}
+              >
+                {this.mainWindow()}
+              </div>
+            </Draggable>
+          )}
+        </UniversalProvider>
       </div>
     ) : null;
   }
