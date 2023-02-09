@@ -16,8 +16,6 @@
   color: rgb(74, 255, 74);
   background-color: #181818;
   border: none;
-  font-family: inherit;
-  font-size: inherit;
   padding: none;
   width: 90%;
 }
@@ -39,6 +37,8 @@
 
 .cmd {
   padding-bottom: 40px;
+  padding-top: 20px;
+  padding-left: 10px;
 }
 
 .unselectable {

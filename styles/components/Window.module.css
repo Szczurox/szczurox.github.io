@@ -13,17 +13,19 @@
   -webkit-user-drag: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+  margin-bottom: -15px;
 }
 
 .window_content_background {
   background-color: #181818;
   opacity: 0.9;
-  padding: 10px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
 
 .window_content {
+  margin: none;
+  padding: none;
   color: rgb(74, 255, 74);
   opacity: 1;
 }
@@ -31,7 +33,6 @@
 .window_content_background_fullscreen {
   background-color: #181818;
   opacity: 0.9;
-  padding: 10px;
   border-radius: "0px";
 }
 

@@ -1,8 +1,8 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React, { ChangeEvent, createRef, FormEvent, RefObject } from "react";
 import { createDesktopElement } from "../utils/Element";
 import styles from "../../styles/components/elements/Console.module.css";
 import { UniversalContext } from "../utils/UniversalProvider";
-
+import { commands } from "./console-commands/Commands";
 export interface ConsoleWindowProps {
   command?: string;
   id: string;
@@ -18,6 +18,7 @@ export class ConsoleWindowContent extends React.Component<
 > {
   static contextType = UniversalContext;
   context!: React.ContextType<typeof UniversalContext>;
+  inputRef: RefObject<HTMLInputElement> = createRef();
 
   constructor(props: ConsoleWindowProps) {
     super(props);
@@ -34,21 +35,24 @@ export class ConsoleWindowContent extends React.Component<
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
+    this.context.setChildState({ command: event.target.value });
     this.setState({ command: event.target.value });
-    this.context.setChildState(this.state);
-    console.log(this.context);
   };
 
   submitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(this.state.command);
+    commands(this.state.command);
+  };
+
+  windowFocus = () => {
+    this.inputRef.current!.focus();
   };
 
   render() {
     return (
       <div className={styles.console}>
         <p></p>
-        <div className={styles.cmd}>
+        <div className={styles.cmd} onClick={this.windowFocus}>
           <form
             onSubmit={(e) => {
               this.submitForm(e);
@@ -56,6 +60,7 @@ export class ConsoleWindowContent extends React.Component<
           >
             <span className={styles.unselectable}>{">"}</span>
             <input
+              ref={this.inputRef}
               className={styles.console_input}
               type="text"
               name="command"

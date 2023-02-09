@@ -178,7 +178,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
                 ref={windowRef}
                 style={{
                   position: "fixed",
-                  top: 30 + "%",
+                  top: 0 + "%",
                   left: 30 + "%",
                   zIndex: this.state.zIndex,
                 }}
