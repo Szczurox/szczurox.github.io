@@ -2,25 +2,16 @@
   color: lightcyan;
 }
 
-.console > code {
-  display: block;
-  white-space: pre-wrap;
-  background-color: black;
-}
-
-.console > span {
-  margin-left: 20px;
+.input_pointer {
+  margin-right: 5px;
 }
 
 .console_input {
   color: rgb(74, 255, 74);
   background-color: #181818;
   border: none;
-  padding: none;
+  font-size: medium;
   width: 90%;
-}
-
-.console_input:focus {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -28,17 +19,19 @@
   text-shadow: none;
 }
 
-.console > p {
-  margin-left: 22px;
-  margin-top: 0px;
-  padding: 0px;
+.cmd > p {
+  margin: none;
+  padding: none;
   white-space: pre-wrap;
 }
 
 .cmd {
-  padding-bottom: 40px;
-  padding-top: 20px;
+  padding-bottom: 20px;
   padding-left: 10px;
+  padding-top: 10px;
+  overflow-y: scroll;
+  max-height: 60vh;
+  min-height: 10vh;
 }
 
 .unselectable {
@@ -50,12 +43,13 @@
   user-select: none;
 }
 
-.prevcommand > .unselectable {
+.prev_command > .unselectable {
   margin-right: 2px;
 }
 
-.prevcommand {
+.prev_command {
   margin-left: 0px;
   padding: 0px;
+  margin-bottom: 10px;
   white-space: pre-wrap;
 }

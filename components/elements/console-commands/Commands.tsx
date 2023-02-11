@@ -1,7 +1,9 @@
 import { calc } from "./calc/Calc";
 
 const echo = (command: string) => {
-  return command.substring(command.indexOf(" ") + 1);
+  if (command.indexOf(" ") != -1)
+    return command.substring(command.indexOf(" ") + 1);
+  return "ERROR: You can't echo an empty string";
 };
 
 // Map with all the commands
@@ -33,20 +35,16 @@ const commandsMap: Map<string, [Function, string[]]> = new Map([
   ],
 ]);
 
-// Handle commands
-export const commands = (command: string) => {
-  // "||" splits command into few commands run one after another
-  let commands: string[] = command.split("|| ");
-  commands.forEach((command) => {
-    // Get command's name (without arguments)
-    let commandName = command.substring(0, command.indexOf(" ")).toLowerCase();
-    // Check if command exists
-    if (commandsMap.has(commandName)) {
-      // If command exists get it from the commandsMap
-      const commandFunction = commandsMap.get(commandName);
-      // Run function that interprets the command and get any returned data
-      let result = commandFunction?.[0](command);
-      console.log(result);
-    }
-  });
+// Handle command
+export const commandCheck = (command: string) => {
+  // Get command's name (without arguments)
+  let commandName = command.substring(0, command.indexOf(" ")).toLowerCase();
+  // Check if command exists
+  if (commandsMap.has(commandName)) {
+    // If command exists get it from the commandsMap
+    const commandFunction = commandsMap.get(commandName);
+    // Run function that interprets the command and get any returned data
+    let result = commandFunction?.[0](command);
+    return result;
+  }
 };

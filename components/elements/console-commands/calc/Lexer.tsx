@@ -7,11 +7,11 @@ export function lexer(command: string) {
   let tokens: Token[] = [];
 
   // Check if calculation is not null
-  if (!calculation) return "ERROR: calculation is null";
+  if (!calculation) return "ERROR: Calculation is null";
 
   for (var i = 0; i < calculation.length; i++) {
     if (calculation[i].split(".").length - 1 > 1)
-      return `ERROR: too many decimal points in: ${calculation[i]}`;
+      return `ERROR: Too many decimal points in: ${calculation[i]}`;
     if (calculation[i].charAt(0) == ".") calculation[i] = "0" + calculation[i];
 
     if (!isNaN(+calculation[i])) {

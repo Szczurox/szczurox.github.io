@@ -24,6 +24,22 @@ a {
   background: rgb(38, 104, 38); /* Gecko Browsers */
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #181818;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(74, 255, 74);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(74, 255, 74);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

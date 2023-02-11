@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Task, TaskProps } from "../components/Task";
 import CmdElement from "../components/elements/Console";
 import ReadMeElement from "../components/elements/ReadMe";
+import { UniversalProvider } from "../components/utils/UniversalProvider";
 
 interface Element {
   window: WindowProps;
@@ -103,16 +104,18 @@ export default function Home() {
           <div className={styles.desktop_windows}>
             {elements
               ? elements!.map((element) => (
-                  <Window
-                    title={element.window.title}
-                    icon={element.window.icon}
-                    taskRef={element.window.taskRef}
-                    ref={element.file.windowRef}
-                    zIndex={100 + elements.indexOf(element)}
-                    onWindowGrab={handleWindowZ}
-                  >
-                    {element.window.children}
-                  </Window>
+                  <UniversalProvider>
+                    <Window
+                      title={element.window.title}
+                      icon={element.window.icon}
+                      taskRef={element.window.taskRef}
+                      ref={element.file.windowRef}
+                      zIndex={100 + elements.indexOf(element)}
+                      onWindowGrab={handleWindowZ}
+                    >
+                      {element.window.children}
+                    </Window>
+                  </UniversalProvider>
                 ))
               : null}
           </div>
