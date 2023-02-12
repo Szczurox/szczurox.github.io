@@ -12,6 +12,15 @@ const echo = (command: string) => {
 // string[1] - command usage
 const commandsMap: Map<string, [Function, string[]]> = new Map([
   [
+    "cls",
+    [
+      (_: string) => {
+        return 2;
+      },
+      ["clears terminal", "cls"],
+    ],
+  ],
+  [
     "echo",
     [
       (command: string) => {
@@ -39,6 +48,9 @@ const commandsMap: Map<string, [Function, string[]]> = new Map([
 export const commandCheck = (command: string) => {
   // Get command's name (without arguments)
   let commandName = command.substring(0, command.indexOf(" ")).toLowerCase();
+  if (commandName == "") commandName = command;
+  commandName = commandName.replace(" ", "");
+  console.log(commandName);
   // Check if command exists
   if (commandsMap.has(commandName)) {
     // If command exists get it from the commandsMap

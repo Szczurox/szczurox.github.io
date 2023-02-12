@@ -11,7 +11,8 @@ export interface ConsoleWindowProps {
 export interface ConsoleWindowStates {
   command: string;
   previousCommandPointer: number;
-  previousCommands: [string, string[]][];
+  consoleElements: [string, boolean][]; // line in console, isCommand
+  commandsCache: string[];
   fullscreen: boolean;
 }
 
@@ -29,7 +30,8 @@ export class ConsoleWindowContent extends React.Component<
     this.state = {
       command: "",
       previousCommandPointer: 0,
-      previousCommands: [],
+      consoleElements: [],
+      commandsCache: [],
       fullscreen: false,
     };
   }
@@ -46,12 +48,13 @@ export class ConsoleWindowContent extends React.Component<
     this.scrollToBottom();
   }
 
+  // Updates both local state and child state
   updateStates = (newState: { [key: string]: any }) => {
     this.context.updateChildState(newState);
     this.setState({ ...this.state, ...newState });
   };
 
-  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     this.updateStates({
       command: event.target.value,
@@ -61,23 +64,50 @@ export class ConsoleWindowContent extends React.Component<
   submitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Entire command + all results
-    let commandFull: [string, string[]] = [this.state.command, []];
+    let commandFull: [string | number, boolean][] = [
+      [this.state.command, true],
+    ];
     // "|" splits command into few commands run one after another
     let commands: string[] = this.state.command.split("| ");
-    // Iterates through all commands
+    // Iterate through all the commands
     commands.forEach((command) => {
       // Get a result of a command
       let result: string = commandCheck(command);
       // If there is no result then the command was invalid
       if (!result) result = `"${command}" is not recognized as a command`;
       // Push the result into the results array
-      commandFull[1].push(result);
+      commandFull.push([result, false]);
     });
-    this.updateStates({
-      command: "",
-      previousCommands: [...this.state.previousCommands, commandFull],
-      previousCommandPointer: this.state.previousCommands.length,
-    });
+
+    // Stores console codes that the command sends
+    let consoleCodes: number[] = [];
+
+    // Traverse command results looking for the console codes
+    for (var i = 0; i < commandFull.length; i++) {
+      // 2 - clear screen
+      if (commandFull[i][0] == 2) {
+        // Add console code intro console codes array if it was not added yet
+        if (consoleCodes.indexOf(2) == -1) consoleCodes.push(2);
+        // Remove all commands and results previous to the CLS so that they don't render
+        commandFull = commandFull.slice(i + 1);
+      }
+    }
+
+    // If there was a console code 2 (clear screen) overwrite all previous console elements
+    if (consoleCodes.indexOf(2) != -1)
+      this.updateStates({
+        command: "",
+        consoleElements: [...commandFull],
+        commandsCache: [...this.state.commandsCache, this.state.command],
+        previousCommandPointer: this.state.commandsCache.length,
+      });
+    else
+      this.updateStates({
+        command: "",
+        consoleElements: [...this.state.consoleElements, ...commandFull],
+        commandsCache: [...this.state.commandsCache, this.state.command],
+        previousCommandPointer: this.state.commandsCache.length,
+      });
   };
 
   windowFocus = () => {
@@ -89,25 +119,27 @@ export class ConsoleWindowContent extends React.Component<
   };
 
   handleKeyboardEvents = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    // Switch between previous and next commands
+    // Previous
     if (event.key == "ArrowUp") {
+      // Checks if the current command pointer is not out of bounds
       if (this.state.previousCommandPointer >= 0) {
         this.updateStates({
-          command:
-            this.state.previousCommands[this.state.previousCommandPointer][0],
+          command: this.state.commandsCache[this.state.previousCommandPointer],
           previousCommandPointer: this.state.previousCommandPointer - 1,
         });
       }
     }
+    // Next
     if (event.key == "ArrowDown") {
+      // Checks if the current command pointer is not out of bounds
       if (
         this.state.previousCommandPointer <
-        this.state.previousCommands.length - 1
+        this.state.commandsCache.length - 1
       ) {
         this.updateStates({
           command:
-            this.state.previousCommands[
-              this.state.previousCommandPointer + 1
-            ][0],
+            this.state.commandsCache[this.state.previousCommandPointer + 1][0],
           previousCommandPointer: this.state.previousCommandPointer + 1,
         });
       } else {
@@ -132,20 +164,21 @@ export class ConsoleWindowContent extends React.Component<
           onClick={this.windowFocus}
           style={this.state.fullscreen ? { maxHeight: "95vh" } : {}}
         >
-          {this.state.previousCommands
-            ? this.state.previousCommands!.map((command) => (
+          {this.state.consoleElements
+            ? this.state.consoleElements!.map((element) => (
                 <div className={styles.prev_command}>
-                  <span
-                    className={`${styles.unselectable} ${styles.input_pointer}`}
-                  >
-                    {"> "}
-                  </span>
-                  {command[0]}
-                  <div>
-                    {command[1].map((result) => {
-                      if (result) return result + "\n";
-                    })}
-                  </div>
+                  {element[1] ? (
+                    <div>
+                      <span
+                        className={`${styles.unselectable} ${styles.input_pointer}`}
+                      >
+                        {"> "}
+                      </span>
+                      {element[0]}
+                    </div>
+                  ) : (
+                    <div>{element[0]}</div>
+                  )}
                 </div>
               ))
             : null}
@@ -166,7 +199,7 @@ export class ConsoleWindowContent extends React.Component<
               autoFocus
               autoComplete="off"
               onChange={(e) => {
-                this.handleChange(e);
+                this.handleInputChange(e);
               }}
             />
             <input type="submit" hidden />
