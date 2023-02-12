@@ -1,4 +1,5 @@
 import React, { createRef, ReactElement, RefObject } from "react";
+import Image from "next/image";
 import styles from "../styles/components/Window.module.css";
 import Draggable from "react-draggable";
 import { Task } from "./Task";
@@ -91,33 +92,37 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             height: this.state.windowedHeight,
           }}
         >
-          <img
+          <Image
             src={this.props.icon}
             style={{ maxHeight: (this.state.windowedHeight! as number) - 10 }}
             className={styles.icon}
+            alt="ICON"
           />
           <p className={styles.title}>{this.props.title}</p>
-          <img
+          <Image
             src={"subtract.svg"}
             style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
             className={styles.minimise}
             onClick={(_) => this.toggleMinimiseWindow()}
+            alt="ICON"
           />
           <span className={styles.title}></span>
-          <img
+          <Image
             src={
               this.state.fullscreen ? "exit-full-screen.svg" : "full-screen.svg"
             }
             style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
             className={styles.x}
             onClick={(_) => this.toggleFullscreen()}
+            alt="ICON"
           />
           <span className={styles.title}></span>
-          <img
+          <Image
             src={"x-symbol.svg"}
             style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
             className={styles.x}
             onClick={(_) => this.toggleShow()}
+            alt="ICON"
           />
         </div>
         <div

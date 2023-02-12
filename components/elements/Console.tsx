@@ -166,7 +166,7 @@ export class ConsoleWindowContent extends React.Component<
         >
           {this.state.consoleElements
             ? this.state.consoleElements!.map((element) => (
-                <div className={styles.prev_command}>
+                <div className={styles.prev_command} key={1}>
                   {element[1] ? (
                     <div>
                       <span

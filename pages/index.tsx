@@ -94,6 +94,7 @@ export default function Home() {
             {elements
               ? elements!.map((element) => (
                   <File
+                    key={1}
                     windowRef={element.file.windowRef}
                     name={element.file.name}
                     icon={element.window.icon}
@@ -104,7 +105,7 @@ export default function Home() {
           <div className={styles.desktop_windows}>
             {elements
               ? elements!.map((element) => (
-                  <UniversalProvider>
+                  <UniversalProvider key={1}>
                     <Window
                       title={element.window.title}
                       icon={element.window.icon}
@@ -124,6 +125,7 @@ export default function Home() {
           {elements
             ? elements!.map((element) => (
                 <Task
+                  key={1}
                   windowRef={element.file.windowRef}
                   name={element.file.name}
                   icon={element.window.icon}

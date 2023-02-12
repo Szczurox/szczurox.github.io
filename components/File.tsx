@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { RefObject } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import styles from "../styles/components/File.module.css";
@@ -46,7 +47,7 @@ export class File extends React.Component<FileProps, FileStates> {
     return (
       <Draggable onStart={this.handleDragStart} onStop={this.handleDragStop}>
         <div className={styles.file}>
-          <img src={this.props.icon} className={styles.icon} />
+          <Image src={this.props.icon} className={styles.icon} alt="ICON" />
           <div className={styles.file_name}>{this.props.name}</div>
         </div>
       </Draggable>
