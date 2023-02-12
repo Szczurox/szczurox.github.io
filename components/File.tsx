@@ -42,12 +42,18 @@ export class File extends React.Component<FileProps, FileStates> {
     // Default values
     let { name, icon } = this.props;
     if (!name) name = "FILE";
-    if (!icon) name = "txt-file-icon.svg";
+    if (!icon) name = "/txt-file-icon.svg";
 
     return (
       <Draggable onStart={this.handleDragStart} onStop={this.handleDragStop}>
         <div className={styles.file}>
-          <Image src={this.props.icon} className={styles.icon} alt="ICON" />
+          <Image
+            src={this.props.icon}
+            className={styles.icon}
+            alt="ICON"
+            width={75}
+            height={75}
+          />
           <div className={styles.file_name}>{this.props.name}</div>
         </div>
       </Draggable>

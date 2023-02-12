@@ -1,5 +1,5 @@
-import Image from "next/image";
 import React, { RefObject } from "react";
+import Image from "next/image";
 import styles from "../styles/components/Task.module.css";
 import { Window } from "./Window";
 
@@ -60,6 +60,8 @@ export class Task extends React.Component<TaskProps, TaskStates> {
           }
         >
           <Image
+            width={30}
+            height={30}
             src={this.props.icon}
             className={this.state.isHovering ? styles.icon_hover : styles.icon}
             alt="ICON"

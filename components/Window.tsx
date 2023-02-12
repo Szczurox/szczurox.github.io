@@ -93,6 +93,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           }}
         >
           <Image
+            width={25}
+            height={25}
             src={this.props.icon}
             style={{ maxHeight: (this.state.windowedHeight! as number) - 10 }}
             className={styles.icon}
@@ -100,7 +102,9 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           />
           <p className={styles.title}>{this.props.title}</p>
           <Image
-            src={"subtract.svg"}
+            width={25}
+            height={25}
+            src={"/subtract.svg"}
             style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
             className={styles.minimise}
             onClick={(_) => this.toggleMinimiseWindow()}
@@ -109,8 +113,12 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           <span className={styles.title}></span>
           <Image
             src={
-              this.state.fullscreen ? "exit-full-screen.svg" : "full-screen.svg"
+              this.state.fullscreen
+                ? "/exit-full-screen.svg"
+                : "/full-screen.svg"
             }
+            width={25}
+            height={25}
             style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
             className={styles.x}
             onClick={(_) => this.toggleFullscreen()}
@@ -118,7 +126,9 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           />
           <span className={styles.title}></span>
           <Image
-            src={"x-symbol.svg"}
+            width={25}
+            height={25}
+            src={"/x-symbol.svg"}
             style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
             className={styles.x}
             onClick={(_) => this.toggleShow()}

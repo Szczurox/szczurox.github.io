@@ -17,7 +17,7 @@ export const createDesktopElement = (
   windowName?: string
 ): DesktopElement => {
   if (!fileName) fileName = "FILE";
-  if (!iconPath) iconPath = "txt-file-icon.svg";
+  if (!iconPath) iconPath = "/txt-file-icon.svg";
   if (!windowName) windowName = fileName;
 
   const windowRef: RefObject<Window> = createRef();

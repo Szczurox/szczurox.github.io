@@ -22,7 +22,7 @@ const ReadMeWindowContent: React.FC = () => {
 
 export const ReadMeElement = createDesktopElement(
   "README",
-  "txt-file-icon.svg",
+  "/txt-file-icon.svg",
   <ReadMeWindowContent />
 );
 
