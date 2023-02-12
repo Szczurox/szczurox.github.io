@@ -29,8 +29,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
 
   constructor(props: WindowProps) {
     super(props);
+    // Default values
     this.state = {
-      // Default values
       open: false,
       show: true,
       fullscreen: false,

@@ -34,13 +34,9 @@
 }
 
 .icon {
-  width: 3.3vh;
   -webkit-user-drag: none;
   margin: none;
   padding: none;
-  margin-left: 0.8vh;
-  margin-right: 0.8vh;
-  margin-top: 0.25vh;
 }
 
 .icon_hover {

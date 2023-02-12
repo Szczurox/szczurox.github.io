@@ -65,6 +65,11 @@ export class Task extends React.Component<TaskProps, TaskStates> {
             src={this.props.icon}
             className={this.state.isHovering ? styles.icon_hover : styles.icon}
             alt="ICON"
+            style={{
+              marginLeft: "0.5vw",
+              marginRight: "0.5vw",
+              marginTop: "0.25vh",
+            }}
           />
         </div>
       </div>
