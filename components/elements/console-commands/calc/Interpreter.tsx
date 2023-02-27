@@ -41,11 +41,7 @@ export class Interpreter {
   }
 
   visit_divide(node: any): any {
-    try {
-      return this.visit(node.node_a) / this.visit(node.node_b);
-    } catch (err) {
-      return "ERROR: tried to divide by 0";
-    }
+    return this.visit(node.node_a) / this.visit(node.node_b);
   }
 
   visit_modulo(node: any): any {

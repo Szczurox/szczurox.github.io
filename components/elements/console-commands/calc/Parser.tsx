@@ -38,13 +38,13 @@ export class Parser {
   // Entry point to the parser
   parse() {
     let result: any = this.expr();
-    if (this.current_token != null) return "ERROR: Invalid syntax";
+    if (this.current_token != null)
+      return "Invalid syntax at character " + (this.current_token_number + 1);
     return result;
   }
 
   expr() {
     let result: any = this.term();
-    if (typeof result === "string") return result;
     while (
       this.current_token != null &&
       (this.current_token.type == TokenType.PLUS ||
@@ -53,12 +53,10 @@ export class Parser {
       if (this.current_token.type == TokenType.PLUS) {
         this.next_node();
         let newResult = this.term();
-        if (typeof newResult === "string") return newResult;
         result = new AddNode(result, newResult);
       } else if (this.current_token.type == TokenType.MINUS) {
         this.next_node();
         let newResult = this.term();
-        if (typeof newResult === "string") return newResult;
         result = new SubtractNode(result, newResult);
       }
     }
@@ -68,7 +66,6 @@ export class Parser {
   term() {
     // Get first half of the node
     let result: any = this.term2();
-    if (typeof result === "string") return result;
     while (
       this.current_token != null &&
       (this.current_token.type == TokenType.MULTIPLY ||
@@ -79,19 +76,16 @@ export class Parser {
         // Multiply node
         this.next_node();
         let newResult = this.term2();
-        if (newResult === "string") return newResult;
         result = new MultiplyNode(result, newResult);
       } else if (this.current_token.type == TokenType.DIVIDE) {
         // Divide node
         this.next_node();
         let newResult = this.term2();
-        if (typeof newResult === "string") return newResult;
         result = new DivideNode(result, newResult);
       } else if (this.current_token.type == TokenType.MODULO) {
         // Divide node
         this.next_node();
         let newResult = this.term2();
-        if (typeof newResult === "string") return newResult;
         result = new ModuloNode(result, newResult);
       }
     }
@@ -100,7 +94,6 @@ export class Parser {
 
   term2() {
     let result: any = this.factor();
-    if (typeof result === "string") return result;
     this.next_node();
     while (
       this.current_token != null &&
@@ -110,7 +103,6 @@ export class Parser {
         // Exponentation node
         this.next_node();
         let newResult = this.factor();
-        if (typeof newResult === "string") return newResult;
         result = new PowNode(result, newResult);
         this.next_node();
       }
@@ -119,30 +111,28 @@ export class Parser {
   }
 
   factor(): any {
-    if (this.current_token == undefined) return "ERROR: Invalid syntax";
-    if (this.current_token.type == TokenType.LPAREN) {
-      // Had to do it this way because TS was throwing an error in RPAREN check
-      this.current_token = this.next_node()!;
-      var result = this.expr();
+    if (this.current_token != undefined) {
+      if (this.current_token.type == TokenType.LPAREN) {
+        // Had to do it this way because TS was throwing an error in RPAREN check
+        this.current_token = this.next_node()!;
+        var result = this.expr();
 
-      if (this.current_token == null)
-        return "ERROR: did not close a parenthesis";
+        if (this.current_token == null) return "Did not close a parenthesis";
 
-      return result;
-    }
+        return result;
+      }
 
-    if (this.current_token.type == TokenType.NUMBER) {
-      return new NumberNode(this.current_token.value);
-    } else if (this.current_token.type == TokenType.PLUS) {
-      this.next_node();
-      let newResult = this.factor();
-      if (typeof newResult === "string") return newResult;
-      return new PlusNode(newResult);
-    } else if (this.current_token.type == TokenType.MINUS) {
-      this.next_node();
-      let newResult = this.factor();
-      if (typeof newResult === "string") return newResult;
-      return new MinusNode(newResult);
+      if (this.current_token.type == TokenType.NUMBER) {
+        return new NumberNode(this.current_token.value);
+      } else if (this.current_token.type == TokenType.PLUS) {
+        this.next_node();
+        let newResult = this.factor();
+        return new PlusNode(newResult);
+      } else if (this.current_token.type == TokenType.MINUS) {
+        this.next_node();
+        let newResult = this.factor();
+        return new MinusNode(newResult);
+      }
     }
     return -1;
   }

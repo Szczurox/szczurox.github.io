@@ -3,6 +3,7 @@ import { createDesktopElement } from "../utils/Element";
 import styles from "../../styles/components/elements/Console.module.css";
 import { UniversalContext } from "../utils/UniversalProvider";
 import { commandCheck } from "./console-commands/Commands";
+
 export interface ConsoleWindowProps {
   command?: string;
   id: string;
@@ -67,46 +68,54 @@ export class ConsoleWindowContent extends React.Component<
     let commandFull: [string | number, boolean][] = [
       [this.state.command, true],
     ];
-    // "|" splits command into few commands run one after another
-    let commands: string[] = this.state.command.split("| ");
-    // Iterate through all the commands
-    commands.forEach((command) => {
-      // Get a result of a command
-      let result: string = commandCheck(command);
-      // If there is no result then the command was invalid
-      if (!result) result = `"${command}" is not recognized as a command`;
-      // Push the result into the results array
-      commandFull.push([result, false]);
-    });
 
-    // Stores console codes that the command sends
-    let consoleCodes: number[] = [];
-
-    // Traverse command results looking for the console codes
-    for (var i = 0; i < commandFull.length; i++) {
-      // 2 - clear screen
-      if (commandFull[i][0] == 2) {
-        // Add console code intro console codes array if it was not added yet
-        if (consoleCodes.indexOf(2) == -1) consoleCodes.push(2);
-        // Remove all commands and results previous to the CLS so that they don't render
-        commandFull = commandFull.slice(i + 1);
-      }
-    }
-
-    // If there was a console code 2 (clear screen) overwrite all previous console elements
-    if (consoleCodes.indexOf(2) != -1)
-      this.updateStates({
-        command: "",
-        consoleElements: [...commandFull],
-        commandsCache: [...this.state.commandsCache, this.state.command],
-        previousCommandPointer: this.state.commandsCache.length,
+    if (this.state.command) {
+      // "&&" splits command into few commands run one after another
+      let commands: string[] = this.state.command.split("&& ");
+      // Iterate through all the commands
+      commands.forEach((command) => {
+        // Get a result of a command
+        let result = commandCheck(command);
+        // Push the result into the results array
+        commandFull.push([result, false]);
       });
-    else
+
+      // Stores console codes that the command sends
+      let consoleCodes: number[] = [];
+
+      // Traverse command results looking for the console codes
+      for (var i = 0; i < commandFull.length; i++) {
+        // 2 - clear screen
+        if (commandFull[i][0] == 2) {
+          // Add console code intro console codes array if it was not added yet
+          if (consoleCodes.indexOf(2) == -1) consoleCodes.push(2);
+          // Remove all commands and results previous to the CLS so that they don't render
+          commandFull = commandFull.slice(i + 1);
+        }
+      }
+
+      // If there was a console code 2 (clear screen) overwrite all previous console elements
+      if (consoleCodes.indexOf(2) != -1)
+        this.updateStates({
+          command: "",
+          consoleElements: [...commandFull],
+          commandsCache: [...this.state.commandsCache, this.state.command],
+          previousCommandPointer: this.state.commandsCache.length,
+        });
+      else
+        this.updateStates({
+          command: "",
+          consoleElements: [
+            ...this.state.consoleElements,
+            ...commandFull,
+            [" ", false],
+          ],
+          commandsCache: [...this.state.commandsCache, this.state.command],
+          previousCommandPointer: this.state.commandsCache.length,
+        });
+    } else
       this.updateStates({
-        command: "",
-        consoleElements: [...this.state.consoleElements, ...commandFull],
-        commandsCache: [...this.state.commandsCache, this.state.command],
-        previousCommandPointer: this.state.commandsCache.length,
+        consoleElements: [...this.state.consoleElements, ["", true]],
       });
   };
 
@@ -166,9 +175,9 @@ export class ConsoleWindowContent extends React.Component<
         >
           {this.state.consoleElements
             ? this.state.consoleElements!.map((element) => (
-                <div className={styles.prev_command} key={1}>
+                <div key={1}>
                   {element[1] ? (
-                    <div>
+                    <div className={styles.prev_command}>
                       <span
                         className={`${styles.unselectable} ${styles.input_pointer}`}
                       >
@@ -177,7 +186,7 @@ export class ConsoleWindowContent extends React.Component<
                       {element[0]}
                     </div>
                   ) : (
-                    <div>{element[0]}</div>
+                    <div className={styles.prev_command}>{element[0]}</div>
                   )}
                 </div>
               ))

@@ -1,9 +1,38 @@
 import { calc } from "./calc/Calc";
 
+export class CommandResult {
+  result: any = null;
+  error: string = "";
+  constructor(result?: any, error: string = "") {
+    this.result = result;
+    this.error = error;
+  }
+}
+
 const echo = (command: string) => {
-  if (command.indexOf(" ") != -1)
-    return command.substring(command.indexOf(" ") + 1);
-  return "ERROR: You can't echo an empty string";
+  if (command.indexOf(" ") == -1)
+    return new CommandResult("", "You can't echo an empty string");
+  return new CommandResult(command.substring(command.indexOf(" ") + 1));
+};
+
+const help = (command: string) => {
+  if (command.indexOf(" ") == -1) {
+    let commandsWithInfo: string[] = [];
+    commandsMap.forEach((value: [Function, string[]], commandName: string) => {
+      commandsWithInfo.push(commandName + " - " + value[1][0]);
+    });
+    return new CommandResult(commandsWithInfo.join("\n"));
+  } else {
+    const commandToFind = command.substring(command.indexOf(" ") + 1);
+    const commandInfo = commandsMap.get(commandToFind);
+    if (commandInfo)
+      return new CommandResult(`${commandInfo[1][0]} \n  ${commandInfo[1][1]}`);
+    else
+      return new CommandResult(
+        "",
+        `Can't find information about a command "${commandToFind}"`
+      );
+  }
 };
 
 // Map with all the commands
@@ -12,12 +41,24 @@ const echo = (command: string) => {
 // string[1] - command usage
 const commandsMap: Map<string, [Function, string[]]> = new Map([
   [
+    "help",
+    [
+      (command: string) => {
+        return help(command);
+      },
+      [
+        "Displays a list of commands or information about a specific command",
+        "help [opt:](command name)",
+      ],
+    ],
+  ],
+  [
     "cls",
     [
       (_: string) => {
-        return 2;
+        return new CommandResult(2);
       },
-      ["clears terminal", "cls"],
+      ["Clears the terminal", "cls"],
     ],
   ],
   [
@@ -26,7 +67,7 @@ const commandsMap: Map<string, [Function, string[]]> = new Map([
       (command: string) => {
         return echo(command);
       },
-      ["displays message", "echo (message)"],
+      ["Displays a message", "echo (message)"],
     ],
   ],
   [
@@ -36,9 +77,8 @@ const commandsMap: Map<string, [Function, string[]]> = new Map([
         return calc(command.substring(command.indexOf(" ")));
       },
       [
-        `performs basic mathematical operations: +, -, *, /, ^
-      supports order of operations, parentheses and rational numbers`,
-        "calc (numbers; oprations; paretheses)",
+        "Performs basic mathematical operations: +, -, *, /, ^, ( )",
+        "calc {numbers; operations}",
       ],
     ],
   ],
@@ -46,6 +86,7 @@ const commandsMap: Map<string, [Function, string[]]> = new Map([
 
 // Handle command
 export const commandCheck = (command: string) => {
+  if (!command) return "";
   // Get command's name (without arguments)
   let commandName = command.substring(0, command.indexOf(" ")).toLowerCase();
   if (commandName == "") commandName = command;
@@ -56,7 +97,9 @@ export const commandCheck = (command: string) => {
     // If command exists get it from the commandsMap
     const commandFunction = commandsMap.get(commandName);
     // Run function that interprets the command and get any returned data
-    let result = commandFunction?.[0](command);
-    return result;
-  }
+    let result: CommandResult = commandFunction?.[0](command);
+    // Send result or error if it occured
+    if (result.error) return "ERROR (" + commandName + "): " + result.error;
+    else return result.result;
+  } else return `"${command}" is not recognized as a command`; // If there is no result then the command was invalid
 };
