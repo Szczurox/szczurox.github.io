@@ -26,7 +26,9 @@ const help = (command: string) => {
     const commandToFind = command.substring(command.indexOf(" ") + 1);
     const commandInfo = commandsMap.get(commandToFind);
     if (commandInfo)
-      return new CommandResult(`${commandInfo[1][0]} \n  ${commandInfo[1][1]}`);
+      return new CommandResult(
+        `${commandInfo[1][0]} \n\n  ${commandInfo[1][1]}`
+      );
     else
       return new CommandResult(
         "",

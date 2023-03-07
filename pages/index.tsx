@@ -53,6 +53,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleClick = () => {
+      // Menu disabled for now, it does nothing
       if (menuOpen) {
         setMenuOpen(false);
       }
@@ -76,7 +77,7 @@ export default function Home() {
       <main
         className={styles.main}
         onContextMenu={(e) => {
-          handleContextMenu(e);
+          // handleContextMenu(e);
         }}
       >
         {menuOpen && (

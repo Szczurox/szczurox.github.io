@@ -15,6 +15,7 @@ export interface ConsoleWindowStates {
   consoleElements: [string, boolean][]; // line in console, isCommand
   commandsCache: string[];
   fullscreen: boolean;
+  windowedHeight: number;
 }
 
 export class ConsoleWindowContent extends React.Component<
@@ -41,7 +42,9 @@ export class ConsoleWindowContent extends React.Component<
     const value: any = this.context;
     if (value) this.setState(value);
     else this.context.updateChildState(this.state);
-    this.setState({ fullscreen: this.context.fullscreen });
+    this.setState({
+      fullscreen: value.fullscreen,
+    });
     this.scrollToBottom();
   }
 
@@ -165,13 +168,17 @@ export class ConsoleWindowContent extends React.Component<
         onKeyDown={(e) => this.handleKeyboardEvents(e)}
         className={styles.console}
         style={
-          this.state.fullscreen ? { margin: "none" } : { marginTop: "15px" }
+          this.state.fullscreen ? { margin: "none" } : { marginTop: "none" }
         }
       >
         <div
           className={styles.cmd}
           onClick={this.windowFocus}
-          style={this.state.fullscreen ? { maxHeight: "95vh" } : {}}
+          style={
+            this.state.fullscreen
+              ? { maxHeight: "95vh" }
+              : { maxHeight: this.context.windowedHeight }
+          }
         >
           {this.state.consoleElements
             ? this.state.consoleElements!.map((element) => (

@@ -1,9 +1,9 @@
 import React, { createRef, ReactElement, RefObject } from "react";
 import Image from "next/image";
 import styles from "../styles/components/Window.module.css";
-import Draggable from "react-draggable";
 import { Task } from "./Task";
 import { UniversalContext } from "./utils/UniversalProvider";
+import { Rnd } from "react-rnd";
 
 export interface WindowProps {
   title: string;
@@ -15,17 +15,19 @@ export interface WindowProps {
 }
 
 export interface WindowStates {
-  open?: boolean;
-  show?: boolean;
-  fullscreen?: boolean;
-  windowedWidth?: number | string;
-  windowedHeight?: number | string;
+  open: boolean;
+  show: boolean;
+  fullscreen: boolean;
+  windowedWidth: number;
+  windowedHeight: number;
+  handleHeight: number;
   zIndex?: number;
 }
 
 export class Window extends React.Component<WindowProps, WindowStates> {
   static contextType = UniversalContext;
   context!: React.ContextType<typeof UniversalContext>;
+  windowRef = createRef<HTMLDivElement>();
 
   constructor(props: WindowProps) {
     super(props);
@@ -35,7 +37,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
       show: true,
       fullscreen: false,
       windowedWidth: 500,
-      windowedHeight: 35,
+      windowedHeight: 615,
+      handleHeight: 35,
       zIndex: this.props.zIndex,
     };
   }
@@ -54,6 +57,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
     this.setState({
       open: !this.state.open,
       fullscreen: false,
+      windowedWidth: 500,
+      windowedHeight: 615,
     });
     this.props.taskRef?.current?.toggleShow();
     this.props.taskRef?.current?.setState({
@@ -89,14 +94,15 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           style={{
             position: this.state.fullscreen ? "fixed" : "static",
             minWidth: this.state.fullscreen ? "100%" : this.state.windowedWidth,
-            height: this.state.windowedHeight,
+            height: this.state.handleHeight,
+            zIndex: this.state.zIndex + 10,
           }}
         >
           <Image
             width={25}
             height={25}
             src={this.props.icon}
-            style={{ maxHeight: (this.state.windowedHeight! as number) - 10 }}
+            style={{ maxHeight: (this.state.handleHeight! as number) - 10 }}
             className={styles.icon}
             alt="ICON"
           />
@@ -105,7 +111,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             width={25}
             height={25}
             src={"/subtract.svg"}
-            style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
+            style={{ maxHeight: (this.state.handleHeight! as number) - 15 }}
             className={styles.minimise}
             onClick={(_) => this.toggleMinimiseWindow()}
             alt="ICON"
@@ -119,7 +125,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             }
             width={25}
             height={25}
-            style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
+            style={{ maxHeight: (this.state.handleHeight! as number) - 15 }}
             className={styles.x}
             onClick={(_) => this.toggleFullscreen()}
             alt="ICON"
@@ -129,7 +135,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             width={25}
             height={25}
             src={"/x-symbol.svg"}
-            style={{ maxHeight: (this.state.windowedHeight! as number) - 15 }}
+            style={{ maxHeight: (this.state.handleHeight! as number) - 15 }}
             className={styles.x}
             onClick={(_) => this.toggleShow()}
             alt="ICON"
@@ -144,23 +150,27 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           style={
             this.state.fullscreen
               ? {
-                  top: this.state.windowedHeight + "px",
+                  top: this.state.handleHeight + "px",
                   width: "100%",
                   position: "fixed",
                   height: "100%",
                 }
-              : { width: this.state.windowedWidth }
+              : {
+                  width: this.state.windowedWidth,
+                  height: this.state.windowedHeight,
+                  padding: "none",
+                }
           }
         >
-          <div className={styles.window_content}>{this.props.children!}</div>
+          <div className={styles.window_content} style={{ paddingTop: "30px" }}>
+            {this.props.children!}
+          </div>
         </div>
       </>
     );
   };
 
   render() {
-    const windowRef = createRef<HTMLDivElement>();
-
     return this.state.open ? (
       <div
         className={styles.window}
@@ -179,29 +189,44 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             {this.mainWindow()}
           </div>
         ) : (
-          <Draggable
-            defaultPosition={{
-              x: 0,
-              y: 0,
+          <Rnd
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              position: "fixed",
+              zIndex: this.state.zIndex,
             }}
-            handle={"." + styles.window_handle}
-            onStart={(_) => {
+            default={{
+              x: this.state.windowedWidth,
+              y: 0,
+              width: this.state.windowedWidth,
+              height: this.state.windowedHeight,
+            }}
+            minWidth={"20vw"}
+            minHeight={"15vh"}
+            maxWidth={"100vw"}
+            maxHeight={"100vh"}
+            bounds={"body"}
+            dragHandleClassName={styles.window_handle}
+            onDragStart={(_) => {
               if (this.props.onWindowGrab)
                 this.props.onWindowGrab(this.props.zIndex! - 100);
             }}
+            onResize={(_e, _direction, ref) => {
+              this.setState({
+                windowedWidth: ref.offsetWidth,
+                windowedHeight: ref.offsetHeight,
+              });
+              this.context.updateChildState({
+                windowedWidth: ref.offsetWidth,
+                windowedHeight: ref.offsetHeight - 35,
+              });
+            }}
           >
-            <div
-              ref={windowRef}
-              style={{
-                position: "fixed",
-                top: 0 + "%",
-                left: 30 + "%",
-                zIndex: this.state.zIndex,
-              }}
-            >
-              {this.mainWindow()}
-            </div>
-          </Draggable>
+            {this.mainWindow()}
+          </Rnd>
         )}
       </div>
     ) : null;
