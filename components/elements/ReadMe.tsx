@@ -4,11 +4,7 @@ import { UniversalContext } from "../utils/UniversalProvider";
 
 export interface ReadMeProps {}
 
-export interface ReadMeStates {
-  fullscreen: boolean;
-  windowedWidth: number;
-  windowedHeight: number;
-}
+export interface ReadMeStates {}
 
 export class ReadMeWindowContent extends React.Component {
   static contextType = UniversalContext;
@@ -25,7 +21,6 @@ export class ReadMeWindowContent extends React.Component {
   render() {
     return (
       <div
-        onClick={(e) => {}}
         style={
           this.context.fullscreen
             ? { maxHeight: "95vh" }

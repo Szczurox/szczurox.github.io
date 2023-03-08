@@ -15,7 +15,6 @@ export interface ConsoleWindowStates {
   consoleElements: [string, boolean][]; // line in console, isCommand
   commandsCache: string[];
   fullscreen: boolean;
-  windowedHeight: number;
 }
 
 export class ConsoleWindowContent extends React.Component<
