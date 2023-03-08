@@ -95,7 +95,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             position: this.state.fullscreen ? "fixed" : "static",
             minWidth: this.state.fullscreen ? "100%" : this.state.windowedWidth,
             height: this.state.handleHeight,
-            zIndex: this.state.zIndex + 10,
+            zIndex: this.state.zIndex! + 10,
           }}
         >
           <Image
