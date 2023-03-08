@@ -31,6 +31,8 @@
 }
 
 .window_content_background_fullscreen {
+  margin: none;
+  padding: none;
   background-color: #181818;
   opacity: 0.9;
   border-radius: "0px";

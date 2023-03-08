@@ -176,7 +176,11 @@ export class ConsoleWindowContent extends React.Component<
           style={
             this.state.fullscreen
               ? { maxHeight: "95vh" }
-              : { maxHeight: this.context.windowedHeight }
+              : {
+                  maxHeight: this.context.windowedHeight
+                    ? this.context.windowedHeight - 5
+                    : "275px",
+                }
           }
         >
           {this.state.consoleElements

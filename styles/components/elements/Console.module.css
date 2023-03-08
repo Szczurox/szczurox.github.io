@@ -30,8 +30,6 @@
   padding-left: 10px;
   padding-top: 10px;
   overflow-y: scroll;
-  max-height: 60vh;
-  min-height: 10vh;
 }
 
 .unselectable {

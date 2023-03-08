@@ -1,6 +1,7 @@
 import React from "react";
 import { createDesktopElement } from "../utils/Element";
 import { UniversalContext } from "../utils/UniversalProvider";
+import styles from "../../styles/components/elements/ReadMe.module.css";
 
 export interface ReadMeProps {}
 
@@ -21,15 +22,13 @@ export class ReadMeWindowContent extends React.Component {
   render() {
     return (
       <div
-        style={
-          this.context.fullscreen
-            ? { maxHeight: "95vh" }
-            : {
-                maxHeight: this.context.windowedHeight - 35,
-                whiteSpace: "pre-wrap",
-                overflowY: "scroll",
-              }
-        }
+        className={styles.readme}
+        style={{
+          overflowY: "scroll",
+          maxHeight: this.context.fullsreen
+            ? "95vh"
+            : this.context.windowedHeight - 10,
+        }}
       >
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ipsum

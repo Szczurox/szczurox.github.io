@@ -28,6 +28,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
   static contextType = UniversalContext;
   context!: React.ContextType<typeof UniversalContext>;
   windowRef = createRef<HTMLDivElement>();
+  defaultWindowWidth = 500;
+  defaultWindowHeight = 315;
 
   constructor(props: WindowProps) {
     super(props);
@@ -36,11 +38,20 @@ export class Window extends React.Component<WindowProps, WindowStates> {
       open: false,
       show: true,
       fullscreen: false,
-      windowedWidth: 500,
-      windowedHeight: 615,
+      windowedWidth: this.defaultWindowWidth,
+      windowedHeight: this.defaultWindowHeight,
       handleHeight: 35,
       zIndex: this.props.zIndex,
     };
+  }
+
+  componentDidMount() {
+    this.context.updateChildState({
+      open: false,
+      fullscreen: false,
+      windowedWidth: this.state.windowedWidth,
+      windowedHeight: this.state.windowedHeight,
+    });
   }
 
   toggleMinimiseWindow = () => {
@@ -57,8 +68,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
     this.setState({
       open: !this.state.open,
       fullscreen: false,
-      windowedWidth: 500,
-      windowedHeight: 615,
+      windowedWidth: this.defaultWindowWidth,
+      windowedHeight: this.defaultWindowHeight,
     });
     this.props.taskRef?.current?.toggleShow();
     this.props.taskRef?.current?.setState({
@@ -159,10 +170,14 @@ export class Window extends React.Component<WindowProps, WindowStates> {
                   width: this.state.windowedWidth,
                   height: this.state.windowedHeight,
                   padding: "none",
+                  margin: "none",
                 }
           }
         >
-          <div className={styles.window_content} style={{ paddingTop: "30px" }}>
+          <div
+            className={styles.window_content}
+            style={{ paddingTop: this.state.fullscreen ? "0px" : "30px" }}
+          >
             {this.props.children!}
           </div>
         </div>
