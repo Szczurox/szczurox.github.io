@@ -7,7 +7,7 @@ export interface UniversalContextProps {
 }
 
 export const UniversalContext = createContext<UniversalContextProps>({
-  updateChildState: (newState: { [key: string]: any }) => {},
+  updateChildState: (newState: { [key: string]: any }): void => {},
   clearChildState: () => {},
 });
 
@@ -20,11 +20,11 @@ export const UniversalProvider: React.FC<UniversalProviderProps> = ({
 }) => {
   const [state, setState] = useState({});
 
-  const updateChildState = (newState: { [key: string]: any }) => {
+  const updateChildState = (newState: { [key: string]: any }): void => {
     setState({ ...state, ...newState });
   };
 
-  const clearChildState = () => {
+  const clearChildState = (): void => {
     setState({});
   };
 

@@ -12,6 +12,7 @@
   display: inline-block;
   min-height: 4.5vh;
   max-height: 4.5vh;
+  width: 2.5vw;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
@@ -37,14 +38,7 @@
   -webkit-user-drag: none;
   margin: none;
   padding: none;
-}
-
-.icon_hover {
-  width: 3.3vh;
-  -webkit-user-drag: none;
-  margin: none;
-  padding: none;
-  margin-left: 0.8vh;
-  margin-right: 0.8vh;
-  margin-top: 0.25vh;
+  height: 3vh;
+  width: 1.8vw;
+  position: absolute;
 }

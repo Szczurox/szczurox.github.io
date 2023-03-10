@@ -1,0 +1,58 @@
+.context_menu {
+  z-index: 100000;
+  margin: 0;
+  padding: 0.5vh 0.1vh 0.5vh 0.1vh;
+  max-width: 20vw;
+  max-height: 20vh;
+  font-size: 1.5vh;
+  border-style: solid;
+  background-color: #131313;
+  color: rgb(44, 255, 44);
+  border-radius: 2px;
+  border-color: rgb(44, 255, 44);
+  border-width: 2px;
+  box-shadow: 2px 2px 2px 2px black;
+  position: absolute;
+  list-style: none;
+  opacity: 0.8;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  display: table;
+  user-select: none;
+  min-width: 15vw;
+}
+
+.context_menu > li {
+  display: table-row;
+  min-width: 14.6vw;
+  padding: 0.1vh 0.1vh 0.1vh 2vh;
+}
+
+.context_menu > li > p {
+  padding: none;
+  color: rgb(0, 237, 0);
+  margin: none;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.context_menu > li > img {
+  padding: none;
+  margin: none;
+  display: table-cell;
+  -webkit-user-drag: none;
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg)
+    brightness(118%) contrast(119%);
+  margin-left: 2vw;
+  margin-right: -0.8vw;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  vertical-align: middle;
+}
+
+.context_menu > li:hover {
+  background-color: black;
+}

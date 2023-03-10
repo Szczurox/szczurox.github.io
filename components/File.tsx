@@ -24,14 +24,21 @@ export class File extends React.Component<FileProps, FileStates> {
     };
   }
 
-  handleDragStart = (e: DraggableEvent, data: DraggableData) => {
+  componentDidMount(): void {
+    // Default values
+    let { name, icon } = this.props;
+    if (!name) name = "FILE";
+    if (!icon) name = "/txt-file-icon.svg";
+  }
+
+  handleDragStart = (_: DraggableEvent, data: DraggableData): void => {
     this.setState({
       xBef: data.x,
       yBef: data.y,
     });
   };
 
-  handleDragStop = (e: DraggableEvent, data: DraggableData) => {
+  handleDragStop = (_: DraggableEvent, data: DraggableData): void => {
     if (data.x == this.state.xBef && data.y == this.state.yBef)
       if (this.props.windowRef.current?.props.taskRef?.current?.state.show)
         this.props.windowRef.current?.toggleMinimiseWindow();
@@ -39,11 +46,6 @@ export class File extends React.Component<FileProps, FileStates> {
   };
 
   render() {
-    // Default values
-    let { name, icon } = this.props;
-    if (!name) name = "FILE";
-    if (!icon) name = "/txt-file-icon.svg";
-
     return (
       <Draggable onStart={this.handleDragStart} onStop={this.handleDragStop}>
         <div className={styles.file}>

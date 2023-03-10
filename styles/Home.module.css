@@ -34,35 +34,3 @@
   flex-direction: column;
   width: 100vw;
 }
-
-.context_menu {
-  z-index: 100000;
-  margin: 0;
-  padding: 0.5vh 0.2vh 0.5vh 0.2vh;
-  max-width: 20vw;
-  max-height: 20vh;
-  font-size: 1.5vh;
-  border-style: solid;
-  background-color: #131313;
-  color: rgb(64, 215, 54);
-  border-radius: 2px;
-  border-color: rgb(64, 215, 54);
-  box-shadow: 2px 2px 2px 2px black;
-  position: absolute;
-  list-style: none;
-  opacity: 0.93;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.context_menu > li {
-  padding: 0.1vh 10vh 0.1vh 2vh;
-}
-
-.context_menu > li:hover {
-  background-color: black;
-}

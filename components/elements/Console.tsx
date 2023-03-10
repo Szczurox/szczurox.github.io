@@ -37,7 +37,7 @@ export class ConsoleWindowContent extends React.Component<
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     const value: any = this.context;
     if (value) this.setState(value);
     else this.context.updateChildState(this.state);
@@ -47,24 +47,24 @@ export class ConsoleWindowContent extends React.Component<
     this.scrollToBottom();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(): void {
     this.scrollToBottom();
   }
 
   // Updates both local state and child state
-  updateStates = (newState: { [key: string]: any }) => {
+  updateStates = (newState: { [key: string]: any }): void => {
     this.context.updateChildState(newState);
     this.setState({ ...this.state, ...newState });
   };
 
-  handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
     this.updateStates({
       command: event.target.value,
     });
   };
 
-  submitForm = (event: FormEvent<HTMLFormElement>) => {
+  submitForm = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     // Entire command + all results
     let commandFull: [string | number, boolean][] = [
@@ -121,15 +121,15 @@ export class ConsoleWindowContent extends React.Component<
       });
   };
 
-  windowFocus = () => {
+  windowFocus = (): void => {
     this.inputRef.current!.focus();
   };
 
-  scrollToBottom = () => {
+  scrollToBottom = (): void => {
     this.bottomRef.current?.scrollIntoView();
   };
 
-  handleKeyboardEvents = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  handleKeyboardEvents = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     // Switch between previous and next commands
     // Previous
     if (event.key == "ArrowUp") {

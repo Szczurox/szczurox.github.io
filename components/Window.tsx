@@ -46,16 +46,25 @@ export class Window extends React.Component<WindowProps, WindowStates> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.context.updateChildState({
       open: false,
       fullscreen: false,
       windowedWidth: this.state.windowedWidth,
       windowedHeight: this.state.windowedHeight,
     });
+    window.addEventListener("resize", this.handleZoom);
   }
 
-  toggleMinimiseWindow = () => {
+  componentWillUnmount(): void {
+    window.removeEventListener("resize", this.handleZoom);
+  }
+
+  handleZoom = (e: Event): void => {
+    console.log(window.devicePixelRatio);
+  };
+
+  toggleMinimiseWindow = (): void => {
     this.setState({
       show: !this.state.show,
     });
@@ -65,7 +74,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
     });
   };
 
-  toggleShow = () => {
+  toggleShow = (): void => {
     this.setState({
       open: !this.state.open,
       fullscreen: false,
@@ -81,26 +90,26 @@ export class Window extends React.Component<WindowProps, WindowStates> {
     this.context.clearChildState();
   };
 
-  toggleFullscreen = () => {
+  toggleFullscreen = (): void => {
     this.setState({
       fullscreen: !this.state.fullscreen,
     });
     this.context.updateChildState({ fullscreen: !this.state.fullscreen });
   };
 
-  decrementZIndex = () => {
+  decrementZIndex = (): void => {
     this.setState({
       zIndex: this.state.zIndex! - 1,
     });
   };
 
-  setZIndex = (zIndex: number) => {
+  setZIndex = (zIndex: number): void => {
     this.setState({
       zIndex: zIndex,
     });
   };
 
-  mainWindow = () => {
+  mainWindow = (): ReactElement => {
     return (
       <>
         <div
