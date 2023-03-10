@@ -12,6 +12,7 @@ export interface WindowProps {
   taskRef?: RefObject<Task>;
   zIndex?: number;
   onWindowGrab?: (index: number) => void;
+  onWindowOpen?: (index: number) => void;
 }
 
 export interface WindowStates {
@@ -75,6 +76,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
     this.props.taskRef?.current?.setState({
       isSelected: true,
     });
+    if (!this.state.open)
+      this.props.onWindowOpen!(this.props.taskRef?.current?.props.id!);
     this.context.clearChildState();
   };
 

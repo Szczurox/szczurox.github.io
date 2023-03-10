@@ -7,6 +7,8 @@ export interface TaskProps {
   name: string;
   icon: string;
   windowRef: RefObject<Window>;
+  position?: number;
+  id: number;
 }
 
 export interface TaskStates {

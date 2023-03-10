@@ -3,21 +3,9 @@ import { createDesktopElement } from "../utils/Element";
 import { UniversalContext } from "../utils/UniversalProvider";
 import styles from "../../styles/components/elements/ReadMe.module.css";
 
-export interface ReadMeProps {}
-
-export interface ReadMeStates {}
-
 export class ReadMeWindowContent extends React.Component {
   static contextType = UniversalContext;
   context!: React.ContextType<typeof UniversalContext>;
-
-  componentDidMount() {
-    this.setState({
-      fullscreen: this.context.fullscreen,
-      windowedWidth: this.context.windowedWidth,
-      windowedHeight: this.context.windowedHeight,
-    });
-  }
 
   render() {
     return (
@@ -25,7 +13,7 @@ export class ReadMeWindowContent extends React.Component {
         className={styles.readme}
         style={{
           overflowY: "scroll",
-          maxHeight: this.context.fullsreen
+          maxHeight: this.context.fullscreen
             ? "95vh"
             : this.context.windowedHeight - 10,
         }}

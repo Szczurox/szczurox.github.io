@@ -1,26 +1,23 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { Window, WindowProps } from "../components/Window";
-import { File, FileProps } from "../components/File";
+import { Window } from "../components/Window";
+import { File } from "../components/File";
 import { useEffect, useState } from "react";
-import { Task, TaskProps } from "../components/Task";
+import { Task } from "../components/Task";
 import CmdElement from "../components/elements/Console";
 import ReadMeElement from "../components/elements/ReadMe";
 import { UniversalProvider } from "../components/utils/UniversalProvider";
-
-interface Element {
-  window: WindowProps;
-  file: FileProps;
-  task: TaskProps;
-}
+import { DesktopElement } from "../components/utils/Element";
+import MinesweeperElement from "../components/elements/Minesweeper";
 
 export default function Home() {
-  const [elements, setElements] = useState<Element[]>([
+  const [elements, setElements] = useState<DesktopElement[]>([
     ReadMeElement,
     CmdElement,
+    MinesweeperElement,
   ]);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  // const [menuType, setMenuType] = useState<number>(0);
+  // const [menuType, setMenuType] = useState<number>(0); //
   const [menuPoint, setMenuPoint] = useState<{ x: number; y: number }>({
     x: 0,
     y: 0,
@@ -32,6 +29,17 @@ export default function Home() {
     });
 
     elements[index].file.windowRef.current?.setZIndex(99 + elements.length);
+  };
+
+  const handleTaskPosition = (index: number) => {
+    let els = [...elements];
+
+    els.forEach((el) => {
+      el.task.position! -= 1;
+    });
+
+    els[index].task.position! = elements.length;
+    setElements(els);
   };
 
   const handleContextMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -114,6 +122,7 @@ export default function Home() {
                       ref={element.file.windowRef}
                       zIndex={100 + elements.indexOf(element)}
                       onWindowGrab={handleWindowZ}
+                      onWindowOpen={handleTaskPosition}
                     >
                       {element.window.children}
                     </Window>
@@ -124,15 +133,30 @@ export default function Home() {
         </div>
         <div className={styles.taskbar}>
           {elements
-            ? elements!.map((element) => (
-                <Task
-                  key={1}
-                  windowRef={element.file.windowRef}
-                  name={element.file.name}
-                  icon={element.window.icon}
-                  ref={element.window.taskRef}
-                />
-              ))
+            ? [...elements]
+                .sort((elA, elB): number => {
+                  let elApos = elA.task.position!;
+                  let elBpos = elB.task.position!;
+                  if (elApos < elBpos) return -1;
+                  if (elApos > elBpos) return 1;
+                  return 0;
+                })
+                .map((element) => {
+                  const index = elements.indexOf(element);
+                  return (
+                    <Task
+                      key={index}
+                      windowRef={element.file.windowRef}
+                      name={element.file.name}
+                      icon={element.window.icon}
+                      ref={element.window.taskRef}
+                      id={index}
+                      position={
+                        element.task.position ? element.task.position : index
+                      }
+                    />
+                  );
+                })
             : null}
         </div>
       </main>

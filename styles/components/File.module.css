@@ -1,5 +1,5 @@
 .file {
-  padding-right: 30px;
+  padding-right: 10px;
   width: 80px;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -19,11 +19,11 @@
 
 .file > .file_name {
   display: -webkit-box;
-  max-width: 60px;
+  max-width: 80px;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  font-size: 15px;
+  font-size: 12px;
   align-content: center;
   word-wrap: break-word;
   text-overflow: ellipsis;
