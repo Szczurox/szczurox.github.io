@@ -53,16 +53,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
       windowedWidth: this.state.windowedWidth,
       windowedHeight: this.state.windowedHeight,
     });
-    window.addEventListener("resize", this.handleZoom);
   }
-
-  componentWillUnmount(): void {
-    window.removeEventListener("resize", this.handleZoom);
-  }
-
-  handleZoom = (e: Event): void => {
-    console.log(window.devicePixelRatio);
-  };
 
   toggleMinimiseWindow = (): void => {
     this.setState({
@@ -226,7 +217,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
               zIndex: this.state.zIndex,
             }}
             default={{
-              x: this.state.windowedWidth,
+              x: window.innerWidth / 4,
               y: 0,
               width: this.state.windowedWidth,
               height: this.state.windowedHeight,
@@ -234,7 +225,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
             minWidth={"20vw"}
             minHeight={"15vh"}
             maxWidth={"100vw"}
-            maxHeight={"100vh"}
+            maxHeight={"98vh"}
             bounds={"body"}
             dragHandleClassName={styles.window_handle}
             onDragStart={(_) => {

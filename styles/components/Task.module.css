@@ -2,6 +2,7 @@
   display: inline-block;
   min-height: 4.5vh;
   max-height: 4.5vh;
+  width: 2.5vw;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
@@ -40,5 +41,8 @@
   padding: none;
   height: 3vh;
   width: 1.8vw;
+  margin-left: 0.8vh;
+  margin-right: 0.8vh;
+  margin-top: 0.25vh;
   position: absolute;
 }
