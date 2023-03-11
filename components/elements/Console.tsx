@@ -73,7 +73,7 @@ export class ConsoleWindowContent extends React.Component<
 
     if (this.state.command) {
       // "&&" splits command into few commands run one after another
-      let commands: string[] = this.state.command.split("&& ");
+      let commands: string[] = this.state.command.split(" && ");
       // Iterate through all the commands
       commands.forEach((command) => {
         // Get a result of a command

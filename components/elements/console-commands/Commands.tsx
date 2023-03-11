@@ -16,7 +16,7 @@ const echo = (command: string) => {
 };
 
 const help = (command: string) => {
-  if (command.indexOf(" ") == -1) {
+  if (command.indexOf(" ") == -1 || command.replace(/\s/g, "") == "help") {
     let commandsWithInfo: string[] = [];
     commandsMap.forEach((value: [Function, string[]], commandName: string) => {
       commandsWithInfo.push(commandName + " - " + value[1][0]);
@@ -92,7 +92,7 @@ export const commandCheck = (command: string) => {
   // Get command's name (without arguments)
   let commandName = command.substring(0, command.indexOf(" ")).toLowerCase();
   if (commandName == "") commandName = command;
-  commandName = commandName.replace(" ", "");
+  commandName = commandName.replace(/\s/g, "");
   console.log(commandName);
   // Check if command exists
   if (commandsMap.has(commandName)) {
