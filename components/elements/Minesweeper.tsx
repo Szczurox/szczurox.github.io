@@ -194,6 +194,7 @@ export class MinesweeperContent extends React.Component<
               const rowIndex = this.state.board.indexOf(row);
               return (
                 <div
+                  key={rowIndex}
                   style={{
                     height: 512 / this.boardSize[0],
                     display: "inline-list-item",
