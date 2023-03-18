@@ -4,6 +4,7 @@ import styles from "../styles/components/Window.module.css";
 import { Task } from "./Task";
 import { UniversalContext } from "./utils/UniversalProvider";
 import { Rnd } from "react-rnd";
+import Draggable from "react-draggable";
 
 export interface WindowProps {
   title: string;
@@ -11,6 +12,10 @@ export interface WindowProps {
   children?: ReactElement;
   taskRef?: RefObject<Task>;
   zIndex?: number;
+  resizable: boolean;
+  allowFullscreen: boolean;
+  width: number;
+  height: number;
   onWindowGrab?: (index: number) => void;
   onWindowOpen?: (index: number) => void;
 }
@@ -22,6 +27,8 @@ export interface WindowStates {
   windowedWidth: number;
   windowedHeight: number;
   handleHeight: number;
+  resizable?: boolean;
+  allowFullscreen?: boolean;
   zIndex?: number;
 }
 
@@ -29,8 +36,6 @@ export class Window extends React.Component<WindowProps, WindowStates> {
   static contextType = UniversalContext;
   context!: React.ContextType<typeof UniversalContext>;
   windowRef = createRef<HTMLDivElement>();
-  defaultWindowWidth = 500;
-  defaultWindowHeight = 315;
 
   constructor(props: WindowProps) {
     super(props);
@@ -39,10 +44,12 @@ export class Window extends React.Component<WindowProps, WindowStates> {
       open: false,
       show: true,
       fullscreen: false,
-      windowedWidth: this.defaultWindowWidth,
-      windowedHeight: this.defaultWindowHeight,
+      windowedWidth: this.props.width,
+      windowedHeight: this.props.height,
       handleHeight: 35,
       zIndex: this.props.zIndex,
+      resizable: this.props.resizable,
+      allowFullscreen: this.props.allowFullscreen,
     };
   }
 
@@ -69,8 +76,8 @@ export class Window extends React.Component<WindowProps, WindowStates> {
     this.setState({
       open: !this.state.open,
       fullscreen: false,
-      windowedWidth: this.defaultWindowWidth,
-      windowedHeight: this.defaultWindowHeight,
+      windowedWidth: this.props.width,
+      windowedHeight: this.props.height,
     });
     this.props.taskRef?.current?.toggleShow();
     this.props.taskRef?.current?.setState({
@@ -82,10 +89,13 @@ export class Window extends React.Component<WindowProps, WindowStates> {
   };
 
   toggleFullscreen = (): void => {
-    this.setState({
-      fullscreen: !this.state.fullscreen,
-    });
-    this.context.updateChildState({ fullscreen: !this.state.fullscreen });
+    console.log(this.state.allowFullscreen, this.props.title);
+    if (this.state.allowFullscreen) {
+      this.setState({
+        fullscreen: !this.state.fullscreen,
+      });
+      this.context.updateChildState({ fullscreen: !this.state.fullscreen });
+    }
   };
 
   decrementZIndex = (): void => {
@@ -206,7 +216,7 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           >
             {this.mainWindow()}
           </div>
-        ) : (
+        ) : this.state.resizable ? (
           <Rnd
             style={{
               display: "flex",
@@ -245,6 +255,31 @@ export class Window extends React.Component<WindowProps, WindowStates> {
           >
             {this.mainWindow()}
           </Rnd>
+        ) : (
+          <Draggable
+            defaultPosition={{
+              x: window.innerWidth / 4,
+              y: 0,
+            }}
+            handle={"." + styles.window_handle}
+            onStart={(_) => {
+              if (this.props.onWindowGrab)
+                this.props.onWindowGrab(this.props.zIndex! - 100);
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                position: "fixed",
+                zIndex: this.state.zIndex,
+              }}
+            >
+              {this.mainWindow()}
+            </div>
+          </Draggable>
         )}
       </div>
     ) : null;

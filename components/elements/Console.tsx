@@ -230,10 +230,10 @@ export class ConsoleWindowContent extends React.Component<
   }
 }
 
-export const CmdElement = createDesktopElement(
-  "Console",
-  "/cmd-icon.svg",
-  <ConsoleWindowContent id="1" />
-);
+export const CmdElement = createDesktopElement({
+  fileName: "Console",
+  iconPath: "/cmd-icon.svg",
+  children: <ConsoleWindowContent id="1" />,
+});
 
 export default CmdElement;

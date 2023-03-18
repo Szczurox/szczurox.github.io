@@ -64,7 +64,7 @@ export default function Home() {
           <div className={styles.desktop_windows}>
             {elements
               ? elements!.map((element) => (
-                  <UniversalProvider key={1}>
+                  <UniversalProvider key={element.task.id}>
                     <Window
                       title={element.window.title}
                       icon={element.window.icon}
@@ -73,6 +73,10 @@ export default function Home() {
                       zIndex={100 + elements.indexOf(element)}
                       onWindowGrab={handleWindowZ}
                       onWindowOpen={handleTaskPosition}
+                      resizable={element.window.resizable}
+                      allowFullscreen={element.window.allowFullscreen}
+                      width={element.window.width}
+                      height={element.window.height}
                     >
                       {element.window.children}
                     </Window>

@@ -35,10 +35,10 @@ export class ReadMeWindowContent extends React.Component {
   }
 }
 
-export const ReadMeElement = createDesktopElement(
-  "README",
-  "/txt-file-icon.svg",
-  <ReadMeWindowContent />
-);
+export const ReadMeElement = createDesktopElement({
+  fileName: "README",
+  iconPath: "/txt-file-icon.svg",
+  children: <ReadMeWindowContent />,
+});
 
 export default ReadMeElement;
