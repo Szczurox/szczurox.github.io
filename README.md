@@ -4,14 +4,15 @@ My personal site.
 ## General info   
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).   
 UI is created so that it resembles desktop.   
-Feel free to use the code in your projects but please credit me, it took me a lot of time to get this site to where it is now and I hope u can respect that.   
 
 ### Content:
 - "Applications" that can be opened by clicking on their shortcut on the desktop
 - Working taskbar
 - Resizable, draggable windows that can be minimised and opened in fullscreen mode
 - Minesweeper minigame
-- Console with few commands (use "help" to get a list of commands)
+- Console with few commands (use "help" to get a list of commands)   
+   
+Feel free to use the code in your projects but please credit me, it took me a lot of time to get this site to where it is now and I hope u can respect that.   
 
 ## Development future
 I plan on making this site serve mainly as my portfolio with some bonuses.   
