@@ -14,8 +14,8 @@ export interface WindowProps {
   zIndex?: number;
   resizable: boolean;
   allowFullscreen: boolean;
-  width: number;
-  height: number;
+  width: number | string;
+  height: number | string;
   onWindowGrab?: (index: number) => void;
   onWindowOpen?: (index: number) => void;
 }
@@ -24,8 +24,8 @@ export interface WindowStates {
   open: boolean;
   show: boolean;
   fullscreen: boolean;
-  windowedWidth: number;
-  windowedHeight: number;
+  windowedWidth: number | string;
+  windowedHeight: number | string;
   handleHeight: number;
   resizable?: boolean;
   allowFullscreen?: boolean;

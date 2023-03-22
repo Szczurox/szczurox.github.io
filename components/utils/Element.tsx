@@ -17,8 +17,8 @@ export interface DesktopElementCreator {
   windowNotResizable?: boolean;
   windowDisallowFullscreen?: boolean;
   windowName?: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
 }
 
 export const createDesktopElement = (

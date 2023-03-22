@@ -44,15 +44,7 @@ export class MinesweeperContent extends React.Component<
   }
 
   componentDidMount(): void {
-    let board: [number, boolean, boolean][][] = [[]];
-    for (let i = 0; i < this.boardSize[0]; i++) {
-      board.push([]);
-      for (let j = 0; j < this.boardSize[1]; j++)
-        board[i].push([0, false, false]);
-    }
-    board = this.generateBoard(board);
-    console.log(board);
-    this.setState({ board: board });
+    this.restart();
   }
 
   generateBoard = (
@@ -169,6 +161,22 @@ export class MinesweeperContent extends React.Component<
     }
   };
 
+  restart = () => {
+    this.setState({
+      currentGameState: 1,
+      minesLeft: this.numOfMines,
+      choice: -1,
+    });
+    let board: [number, boolean, boolean][][] = [[]];
+    for (let i = 0; i < this.boardSize[0]; i++) {
+      board.push([]);
+      for (let j = 0; j < this.boardSize[1]; j++)
+        board[i].push([0, false, false]);
+    }
+    board = this.generateBoard(board);
+    this.setState({ board: board });
+  };
+
   render() {
     return (
       <div
@@ -188,7 +196,9 @@ export class MinesweeperContent extends React.Component<
                 paddingLeft: 10,
               }}
             >
-              MINES: {this.state.minesLeft}
+              <div style={{ display: "inline-block", fontSize: 30 }}>
+                MINES: {this.state.minesLeft}
+              </div>
             </div>
             {this.state.board.map((row) => {
               const rowIndex = this.state.board.indexOf(row);
@@ -208,7 +218,7 @@ export class MinesweeperContent extends React.Component<
                         className={styles.board_element}
                         style={{
                           width: 512 / this.boardSize[0],
-                          height: 512 / this.boardSize[0],
+                          height: 512 / this.boardSize[1],
                           display: "inline-block",
                           fontSize: 256 / this.boardSize[0],
                           textAlign: "center",
@@ -247,10 +257,34 @@ export class MinesweeperContent extends React.Component<
               );
             })}
           </div>
-        ) : this.state.currentGameState == 2 ? (
-          <div>You lose</div>
         ) : (
-          <div>You win</div>
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: 60,
+            }}
+          >
+            <div className={styles.game_complete_text}>
+              {this.state.currentGameState == 2 ? <>You Lose</> : <>You Win</>}
+            </div>
+            <div
+              onClick={(_) => this.restart()}
+              className={styles.restart}
+              style={{
+                marginTop: 20,
+                width: 160,
+                height: 60,
+                display: "block",
+                marginLeft: "auto",
+                marginRight: "auto",
+                fontSize: 35,
+                textAlign: "center",
+                backgroundColor: "rgb(2, 62, 2)",
+              }}
+            >
+              RESTART
+            </div>
+          </div>
         )}
       </div>
     );
