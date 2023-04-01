@@ -8,7 +8,6 @@ export interface MinesweeperProps {}
 export interface MinesweeperStates {
   currentGameState: number;
   minesLeft: number;
-  choice: number;
   board: [number, boolean, boolean][][]; // value, isVisible, isFlagged
 }
 
@@ -38,13 +37,14 @@ export class MinesweeperContent extends React.Component<
     this.state = {
       currentGameState: 1,
       minesLeft: this.numOfMines,
-      choice: -1,
       board: [],
     };
   }
 
   componentDidMount(): void {
-    this.restart();
+    this.setState({
+      currentGameState: 0,
+    });
   }
 
   generateBoard = (
@@ -161,11 +161,24 @@ export class MinesweeperContent extends React.Component<
     }
   };
 
-  restart = () => {
+  start = (difficulty: number = 0) => {
+    switch (difficulty) {
+      case 1:
+        this.numOfMines = 35;
+        this.boardSize = [13, 13];
+        break;
+      case 2:
+        this.numOfMines = 70;
+        this.boardSize = [18, 18];
+        break;
+      default:
+        this.numOfMines = 10;
+        this.boardSize = [8, 8];
+        break;
+    }
     this.setState({
       currentGameState: 1,
       minesLeft: this.numOfMines,
-      choice: -1,
     });
     let board: [number, boolean, boolean][][] = [[]];
     for (let i = 0; i < this.boardSize[0]; i++) {
@@ -257,7 +270,7 @@ export class MinesweeperContent extends React.Component<
               );
             })}
           </div>
-        ) : (
+        ) : this.state.currentGameState == 2 ? (
           <div
             style={{
               textAlign: "center",
@@ -268,21 +281,72 @@ export class MinesweeperContent extends React.Component<
               {this.state.currentGameState == 2 ? <>You Lose</> : <>You Win</>}
             </div>
             <div
-              onClick={(_) => this.restart()}
-              className={styles.restart}
+              onClick={(_) =>
+                this.setState({
+                  currentGameState: 0,
+                })
+              }
+              className={styles.button}
               style={{
                 marginTop: 20,
                 width: 160,
                 height: 60,
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
                 fontSize: 35,
-                textAlign: "center",
                 backgroundColor: "rgb(2, 62, 2)",
               }}
             >
               RESTART
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: 60,
+            }}
+          >
+            <div className={styles.game_complete_text}>Minesweeper</div>
+            <div
+              onClick={(_) => this.start(0)}
+              className={styles.button}
+              style={{
+                marginTop: 20,
+                width: 160,
+                height: 60,
+                fontSize: 35,
+                backgroundColor: "rgb(0, 255, 0)",
+                color: "black",
+              }}
+            >
+              EASY
+            </div>
+            <div
+              onClick={(_) => this.start(1)}
+              className={styles.button}
+              style={{
+                marginTop: 20,
+                width: 160,
+                height: 60,
+                fontSize: 35,
+                backgroundColor: "rgb(255, 255, 0)",
+                color: "black",
+              }}
+            >
+              MEDIUM
+            </div>
+            <div
+              onClick={(_) => this.start(2)}
+              className={styles.button}
+              style={{
+                marginTop: 20,
+                width: 160,
+                height: 60,
+                fontSize: 35,
+                backgroundColor: "rgb(255, 0, 0)",
+                color: "black",
+              }}
+            >
+              HARD
             </div>
           </div>
         )}

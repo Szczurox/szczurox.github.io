@@ -1,6 +1,6 @@
 .board_element {
   background-color: rgb(1, 82, 1);
-  border: 2px solid #31b82a;
+  border: 1px solid #31b82a;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-drag: none;
@@ -10,7 +10,7 @@
 
 .board_element:hover {
   background-color: green;
-  border: 2px solid #31b82a;
+  border: 1px solid #31b82a;
 }
 
 .game_complete_text {
@@ -21,12 +21,11 @@
   -ms-user-select: none;
 }
 
-.restart {
+.button {
   display: block;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  background-color: rgb(2, 62, 2);
   user-select: none;
   -moz-user-select: none;
   -webkit-user-drag: none;
