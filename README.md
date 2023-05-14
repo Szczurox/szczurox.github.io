@@ -1,4 +1,6 @@
-[![Lines of code](https://tokei.ekzhang.com/b1/github/Szczurox/szczurox.github.io)](https://tokei.ekzhang.com/b1/github/Szczurox/szczurox.github.io)   
+[![Lines of code](https://tokei.rs/b1/github/Szczurox/szczurox.github.io)](https://github.com/Szczurox/szczurox.github.io)
+[![License](https://img.shields.io/github/license/Szczurox/szczurox.github.io?service=github)](https://github.com/Szczurox/szczurox.github.io/blob/main/LICENSE)
+
 My personal site.   
 
 ## General info   
