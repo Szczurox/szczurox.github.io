@@ -9,12 +9,14 @@ import ReadMeElement from "../components/elements/ReadMe";
 import { UniversalProvider } from "../components/utils/UniversalProvider";
 import { DesktopElement } from "../components/utils/Element";
 import MinesweeperElement from "../components/elements/Minesweeper";
+import FaicampElement from "../components/elements/Faicamp";
 
 export default function Home() {
   const [elements, setElements] = useState<DesktopElement[]>([
     ReadMeElement,
     CmdElement,
     MinesweeperElement,
+    FaicampElement,
   ]);
 
   const handleWindowZ = (index: number): void => {

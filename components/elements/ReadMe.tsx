@@ -15,20 +15,45 @@ export class ReadMeWindowContent extends React.Component {
           overflowY: "scroll",
           maxHeight: this.context.fullscreen
             ? "95vh"
-            : this.context.windowedHeight - 10,
+            : this.context.windowedHeight
+            ? this.context.windowedHeight
+            : "280px",
         }}
       >
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ipsum
-          dolor, ultricies hendrerit dignissim in, pretium in orci. Mauris
-          euismod lorem sit amet ipsum dapibus, vel euismod massa pulvinar.
-          Vestibulum id ullamcorper nunc. Donec rhoncus ex mauris, ac
-          consectetur felis hendrerit in. Vestibulum convallis finibus aliquet.
-          Pellentesque rhoncus tortor eget neque commodo vehicula sed a velit.
-          Suspendisse nec tristique libero. Sed malesuada dui vel sapien
-          vestibulum vulputate. Nullam malesuada imperdiet nisi eget semper. Ut
-          malesuada augue eu tristique laoreet. In metus metus, pulvinar vitae
-          imperdiet quis, convallis quis sem.
+          Hello World! Szczczurox here <br />
+          Welcome to my website!
+          <br />
+          <br />
+          I am a programmer from Poland who likes to work on projects in many
+          different fields.
+          <br />
+          <br />
+          I don't work professionally yet but if you like any of my projects and
+          would want me to create something for you or would like to collab you
+          can message me on Discord (SzczuroxPL#4611) or email
+          plszczurox@gmail.com
+          <br />
+          <br />
+          What you can find on this site:
+          <br />- This file
+          <br />- Console with some basic commands (use "help" for information
+          on commands)
+          <br />- Minesweeper minigame
+          <br />- Link to my other project,{" "}
+          <a
+            href={"https://faicamp.vercel.app"}
+            style={{ color: "white", textDecoration: "underline" }}
+          >
+            Faicamp
+          </a>
+          <br />
+          <br />
+          As you can see website''s UI tries to imitate desktop.
+          <br />
+          You can open, close, resize and minimise windows as well as open files
+          in fullscreen mode.
+          <br />
         </p>
       </div>
     );
@@ -39,6 +64,8 @@ export const ReadMeElement = createDesktopElement({
   fileName: "README",
   iconPath: "/txt-file-icon.svg",
   children: <ReadMeWindowContent />,
+  width: 620,
+  height: 320,
 });
 
 export default ReadMeElement;
